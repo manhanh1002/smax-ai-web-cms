@@ -1,0 +1,326 @@
+import React from "react";
+import { BlockDefinition } from "../block-system/types";
+
+// Import all renderers
+import { HeroCenteredBlock, HeroCenteredData } from "@/components/sections/HeroCentered";
+import { PageHeaderBlock, PageHeaderData } from "@/components/sections/PageHeader";
+import { TimelineBlock, TimelineData } from "@/components/sections/Timeline";
+import { QuoteHighlightBlock, QuoteHighlightData } from "@/components/sections/QuoteHighlight";
+import { AuthorBioBlock, AuthorBioData } from "@/components/sections/AuthorBio";
+import { RichAccordionBlock, RichAccordionData } from "@/components/sections/RichAccordion";
+import { PricingToggleBlock, PricingToggleData } from "@/components/sections/PricingToggle";
+import { CountUpStatsBlock, CountUpStatsData } from "@/components/sections/CountUpStats";
+import { AnnouncementBarBlock, AnnouncementBarData } from "@/components/sections/AnnouncementBar";
+import { TeamGridBlock, TeamGridData } from "@/components/sections/TeamGrid";
+import { FeatureChecklistBlock, FeatureChecklistData } from "@/components/sections/FeatureChecklist";
+
+// Import all editors
+import { HeroCenteredEditor } from "@/components/cms/block-editors/HeroCenteredEditor";
+import { PageHeaderEditor } from "@/components/cms/block-editors/PageHeaderEditor";
+import { TimelineEditor } from "@/components/cms/block-editors/TimelineEditor";
+import { QuoteHighlightEditor } from "@/components/cms/block-editors/QuoteHighlightEditor";
+import { AuthorBioEditor } from "@/components/cms/block-editors/AuthorBioEditor";
+import { RichAccordionEditor } from "@/components/cms/block-editors/RichAccordionEditor";
+import { PricingToggleEditor } from "@/components/cms/block-editors/PricingToggleEditor";
+import { CountUpStatsEditor } from "@/components/cms/block-editors/CountUpStatsEditor";
+import { AnnouncementBarEditor } from "@/components/cms/block-editors/AnnouncementBarEditor";
+import { TeamGridEditor } from "@/components/cms/block-editors/TeamGridEditor";
+import { FeatureChecklistEditor } from "@/components/cms/block-editors/FeatureChecklistEditor";
+
+/**
+ * CUSTOM BLOCKS REGISTRY
+ * 11 newly created custom blocks for the Smax AI CMS
+ * Last updated: April 2025
+ */
+
+export const CUSTOM_BLOCKS_REGISTRY: BlockDefinition[] = [
+  // ====== LAYOUT BLOCKS ======
+  {
+    type: "heroCentered",
+    label: "⬛ Hero Centered",
+    description: "Toàn màn hình text căn giữa, gradient nền, không split ảnh.",
+    category: "layout",
+    renderer: HeroCenteredBlock,
+    editor: HeroCenteredEditor,
+    defaultData: {
+      badge: "🚀 Tính năng mới",
+      title: "Giải pháp tốt nhất cho",
+      highlight: "doanh nghiệp của bạn",
+      subtitle: "Mô tả ngắn gọn về giá trị mang lại",
+      primaryBtn: "Dùng thử miễn phí",
+      primaryBtnUrl: "/dung-thu",
+      secondaryBtn: "Xem demo",
+      secondaryBtnUrl: "/demo",
+      bgGradient: "purple",
+      darkMode: false,
+      eyebrowIcon: "🎯"
+    } as HeroCenteredData
+  },
+
+  {
+    type: "pageHeader",
+    label: "📄 Page Header",
+    description: "Header nội trang: breadcrumb, tiêu đề, subtitle, tags, metadata.",
+    category: "layout",
+    renderer: PageHeaderBlock,
+    editor: PageHeaderEditor,
+    defaultData: {
+      breadcrumbs: [{ label: "Home", url: "/" }, { label: "Blog" }],
+      title: "Tiêu đề bài viết",
+      subtitle: "Mô tả ngắn gọn nội dung",
+      tags: ["Tin tức", "Công nghệ"],
+      publishDate: "12/06/2025",
+      readTime: "5 phút đọc",
+      authorName: "Nguyễn Văn A",
+      darkMode: false,
+      alignment: "left"
+    } as PageHeaderData
+  },
+
+  // ====== CONTENT BLOCKS ======
+  {
+    type: "timeline",
+    label: "⏱ Timeline",
+    description: "Dòng thời gian dọc hoặc ngang: lịch sử, roadmap, milestones.",
+    category: "content",
+    renderer: TimelineBlock,
+    editor: TimelineEditor,
+    defaultData: {
+      sectionLabel: "Hành trình",
+      title: "Các mốc phát triển",
+      subtitle: "Từ ý tưởng đến thành công",
+      items: [
+        { year: "2023", title: "Khởi đầu", description: "Nảy sinh ý tưởng dự án", icon: "💡", highlight: false },
+        { year: "2024", title: "Ra mắt Beta", description: "Phiên bản beta cho khách hàng thử nghiệm", icon: "🚀", highlight: true },
+      ],
+      orientation: "vertical",
+      darkMode: false
+    } as TimelineData
+  },
+
+  {
+    type: "quoteHighlight",
+    label: "❝ Pull Quote",
+    description: "Trích dẫn nổi bật cỡ lớn, kèm ảnh tác giả và nguồn trích.",
+    category: "content",
+    renderer: QuoteHighlightBlock,
+    editor: QuoteHighlightEditor,
+    defaultData: {
+      quote: "Đây là một trích dẫn nổi bật từ một khách hàng hài lòng về sản phẩm của chúng tôi.",
+      author: "Nguyễn Văn A",
+      role: "CEO",
+      company: "Công ty ABC",
+      avatar: "",
+      alignment: "left",
+      accentColor: "violet",
+      darkMode: false
+    } as QuoteHighlightData
+  },
+
+  {
+    type: "authorBio",
+    label: "👤 Author Bio",
+    description: "Card tác giả: ảnh, tên, chức danh, tiểu sử, link mạng xã hội.",
+    category: "content",
+    renderer: AuthorBioBlock,
+    editor: AuthorBioEditor,
+    defaultData: {
+      name: "Nguyễn Văn A",
+      title: "Senior Developer",
+      company: "Tech Company",
+      bio: "Một nhà phát triển phần mềm giàu kinh nghiệm, chuyên về công nghệ web và mobile.",
+      avatar: "",
+      socials: [
+        { platform: "linkedin", url: "https://linkedin.com/in/..." },
+        { platform: "twitter", url: "https://twitter.com/..." },
+      ],
+      darkMode: false,
+      layout: "horizontal"
+    } as AuthorBioData
+  },
+
+  {
+    type: "richAccordion",
+    label: "▼ Rich Accordion",
+    description: "Accordion nội dung tổng quát: hỗ trợ rich text, icon, multiline.",
+    category: "content",
+    renderer: RichAccordionBlock,
+    editor: RichAccordionEditor,
+    defaultData: {
+      sectionLabel: "Hỏi đáp",
+      title: "Các câu hỏi thường gặp",
+      subtitle: "Tìm hiểu thêm về sản phẩm của chúng tôi",
+      items: [
+        { heading: "Đây là câu hỏi đầu tiên?", body: "Đây là nội dung trả lời chi tiết cho câu hỏi.", icon: "❓", defaultOpen: true },
+        { heading: "Làm cách nào để bắt đầu?", body: "Bước 1: Đăng ký\nBước 2: Chọn gói\nBước 3: Bắt đầu sử dụng", icon: "🚀", defaultOpen: false },
+      ],
+      allowMultiple: false,
+      darkMode: false
+    } as RichAccordionData
+  },
+
+  // ====== MARKETING BLOCKS ======
+  {
+    type: "pricingToggle",
+    label: "💰 Pricing with Toggle",
+    description: "Bảng giá có toggle tháng/năm, highlight tier, badge tiết kiệm.",
+    category: "marketing",
+    renderer: PricingToggleBlock,
+    editor: PricingToggleEditor,
+    defaultData: {
+      sectionLabel: "Bảng giá",
+      title: "Chọn gói phù hợp với bạn",
+      subtitle: "Linh hoạt chọn theo tháng hoặc năm",
+      plans: [
+        {
+          name: "Gói Starter",
+          monthlyPrice: 199000,
+          annualPrice: 1990000,
+          currency: "₫",
+          description: "Dành cho cá nhân",
+          features: ["5GB lưu trữ", "1 người dùng", "Email support"],
+          ctaText: "Bắt đầu ngay",
+          ctaUrl: "/signup",
+          popular: false,
+        },
+        {
+          name: "Gói Professional",
+          monthlyPrice: 499000,
+          annualPrice: 4990000,
+          currency: "₫",
+          description: "Dành cho nhóm",
+          features: ["100GB lưu trữ", "5 người dùng", "24/7 support"],
+          ctaText: "Dùng thử",
+          ctaUrl: "/signup",
+          popular: true,
+          badge: "Phổ biến nhất",
+        },
+      ],
+      savingsBadge: "Tiết kiệm 20%",
+      darkMode: false
+    } as PricingToggleData
+  },
+
+  {
+    type: "countUpStats",
+    label: "🔢 Animated Counters",
+    description: "Số liệu đếm lên animated khi scroll vào viewport.",
+    category: "marketing",
+    renderer: CountUpStatsBlock,
+    editor: CountUpStatsEditor,
+    defaultData: {
+      sectionLabel: "Con số ấn tượng",
+      title: "Đạt được những thành tích",
+      subtitle: "Từ những con số thực tế",
+      stats: [
+        { value: 10000, suffix: "+", label: "Khách hàng", description: "Tin tưởng chúng tôi", icon: "👥" },
+        { value: 95, suffix: "%", label: "Hài lòng", description: "Tỷ lệ hài lòng khách hàng", icon: "⭐" },
+        { value: 150, suffix: "+", label: "Quốc gia", description: "Phục vụ toàn cầu", icon: "🌍" },
+      ],
+      columns: 3,
+      darkMode: false,
+      layout: "cards"
+    } as CountUpStatsData
+  },
+
+  {
+    type: "announcementBar",
+    label: "📢 Announcement Bar",
+    description: "Dải thông báo dismissible trên cùng trang: khuyến mãi, sự kiện.",
+    category: "marketing",
+    renderer: AnnouncementBarBlock,
+    editor: AnnouncementBarEditor,
+    defaultData: {
+      message: "🎉 Ưu đãi đặc biệt! Giảm 30% tất cả gói trong tháng này.",
+      ctaText: "Xem ngay",
+      ctaUrl: "/promotion",
+      icon: "🎉",
+      bgColor: "violet",
+      dismissible: true,
+      openInNewTab: false
+    } as AnnouncementBarData
+  },
+
+  {
+    type: "featureChecklist",
+    label: "✓ Feature Checklist",
+    description: "2 cột: danh sách tính năng có/không có checkmark.",
+    category: "marketing",
+    renderer: FeatureChecklistBlock,
+    editor: FeatureChecklistEditor,
+    defaultData: {
+      sectionLabel: "So sánh",
+      title: "Chọn gói phù hợp nhất",
+      subtitle: "So sánh chi tiết tính năng",
+      columnA: {
+        label: "Gói Cơ Bản",
+        sublabel: "Cho cá nhân",
+        items: [
+          { text: "5GB lưu trữ", checked: true },
+          { text: "1 người dùng", checked: true },
+          { text: "Email support", checked: true },
+          { text: "API access", checked: false },
+          { text: "24/7 support", checked: false },
+        ]
+      },
+      columnB: {
+        label: "Gói Pro",
+        sublabel: "Cho doanh nghiệp",
+        items: [
+          { text: "Lưu trữ không giới hạn", checked: true },
+          { text: "Unlimited người dùng", checked: true },
+          { text: "Email support", checked: true },
+          { text: "API access", checked: true },
+          { text: "24/7 support", checked: true },
+        ]
+      },
+      darkMode: false
+    } as FeatureChecklistData
+  },
+
+  // ====== SOCIAL / FORMS BLOCKS ======
+  {
+    type: "teamGrid",
+    label: "👥 Team Grid",
+    description: "Grid thành viên: ảnh, tên, chức danh, link mạng xã hội.",
+    category: "social",
+    renderer: TeamGridBlock,
+    editor: TeamGridEditor,
+    defaultData: {
+      sectionLabel: "Đội ngũ",
+      title: "Gặp gỡ đội ngũ của chúng tôi",
+      subtitle: "Những người tài năng đằng sau sản phẩm",
+      members: [
+        {
+          name: "Nguyễn Văn A",
+          role: "CEO & Co-founder",
+          avatar: "",
+          bio: "Lãnh đạo chiến lược công ty",
+          linkedin: "https://linkedin.com",
+          twitter: "https://twitter.com",
+        },
+        {
+          name: "Trần Thị B",
+          role: "CTO",
+          avatar: "",
+          bio: "Giám đốc công nghệ",
+          linkedin: "https://linkedin.com",
+          twitter: "",
+        },
+      ],
+      columns: 3,
+      avatarShape: "circle",
+      showBio: true,
+      darkMode: false
+    } as TeamGridData
+  },
+];
+
+// Export for convenience
+export const getBlockByType = (type: string): BlockDefinition | undefined => {
+  return CUSTOM_BLOCKS_REGISTRY.find(block => block.type === type);
+};
+
+export const getBlocksByCategory = (category: string): BlockDefinition[] => {
+  return CUSTOM_BLOCKS_REGISTRY.filter(block => block.category === category);
+};

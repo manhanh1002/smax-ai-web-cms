@@ -1,0 +1,53 @@
+{
+  "colors": {
+    "primary": "#0284C7",
+    "primaryForeground": "#ffffff",
+    "secondary": "#082F49",
+    "secondaryForeground": "#ffffff",
+    "accent": "#0EA5E9",
+    "accentForeground": "#ffffff",
+    "background": "#ffffff",
+    "foreground": "#101828",
+    "card": "#ffffff",
+    "cardForeground": "#101828",
+    "popover": "#ffffff",
+    "popoverForeground": "#101828",
+    "muted": "#F3F4F6",
+    "mutedForeground": "#6B7280",
+    "destructive": "#EF4444",
+    "destructiveForeground": "#ffffff",
+    "border": "#E5E7EB",
+    "input": "#E5E7EB",
+    "ring": "#E25A49",
+    "success": "#10B981",
+    "primaryHover": "#c2543d"
+  },
+  "typography": {
+    "headingFont": "Inter, sans-serif",
+    "bodyFont": "Inter, sans-serif",
+    "baseSize": "16px",
+    "h1Weight": "900",
+    "h2Weight": "800",
+    "h3Weight": "700"
+  },
+  "ui": {
+    "radius": "0.5rem",
+    "buttonStyle": "solid",
+    "shadowStyle": "soft",
+    "customShadow": "",
+    "buttonPadding": "0.75rem 1.5rem",
+    "inputHeight": "2.75rem",
+    "cardPadding": "2rem",
+    "borderWidth": "1px"
+  },
+  "effects": {
+    "marqueeSpeed": "20s",
+    "marqueeGap": "2rem",
+    "gridSpeed": "15s"
+  },
+  "blocks": {
+    "theme": "saas",
+    "paddingTop": "large",
+    "paddingBottom": "large"
+  }
+}
