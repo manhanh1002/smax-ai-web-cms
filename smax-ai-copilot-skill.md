@@ -112,6 +112,9 @@ To ensure that the created resources do not cause hydration crashes or layout br
     *   `html_content` (string, optional): Rich-text HTML content.
         *   *Crucial backend behavior:* The backend wraps `html_content` into block format:
             `content: [{ type: "richText", data: { content: html_content } }]`
+    *   `seo_title` (string, optional): Custom title tag for SEO optimization.
+    *   `seo_description` (string, optional): Custom meta description for search engines.
+    *   `seo_keywords` (string, optional): Comma-separated keywords for SEO targeting.
 
 ---
 

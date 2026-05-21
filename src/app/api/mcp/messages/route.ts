@@ -100,7 +100,10 @@ const TOOLS = [
         summary: { type: "string" },
         html_content: { type: "string", description: "Standard HTML body text for the blog post" },
         featured_image: { type: "string" },
-        status: { type: "string", enum: ["draft", "published"] }
+        status: { type: "string", enum: ["draft", "published"] },
+        seo_title: { type: "string", description: "Meta title for SEO" },
+        seo_description: { type: "string", description: "Meta description for SEO" },
+        seo_keywords: { type: "string", description: "Meta keywords (comma separated) for SEO" }
       },
       required: ["title", "slug"]
     }
@@ -459,6 +462,16 @@ export async function POST(request: NextRequest) {
             featured_image: args.featured_image || null,
             updated_at: new Date().toISOString()
           } as any;
+
+          if (args.seo_title !== undefined) postData.seo_title = args.seo_title;
+          if (args.seo_description !== undefined) postData.seo_description = args.seo_description;
+          if (args.seo_keywords !== undefined) {
+            if (typeof args.seo_keywords === "string") {
+              postData.seo_keywords = args.seo_keywords.split(",").map((k: string) => k.trim()).filter(Boolean);
+            } else {
+              postData.seo_keywords = args.seo_keywords;
+            }
+          }
 
           if (args.html_content) {
             postData.content = [
