@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, use, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { supabase } from "@/lib/supabase";
 import { Button } from "@/components/ui/Button";
 import { 
@@ -9,6 +9,7 @@ import {
   Copy, Monitor, Tablet, Smartphone, History, RotateCcw
 } from "lucide-react";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { ProductEditor } from "@/components/cms/ProductEditor";
 import { BlockEditor } from "@/components/cms/BlockEditor";
 import { ProductTemplate } from "@/components/templates/ProductTemplate";
@@ -21,8 +22,9 @@ import { Toggle } from "@/components/ui/Toggle";
 import { Badge } from "@/components/ui/Badge";
 import { PageHistoryModal } from "@/components/cms/PageHistoryModal";
 
-export default function PageEditor({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params);
+export default function PageEditor() {
+  const { id } = useParams() as { id: string };
+
   const [page, setPage] = useState<any>(null);
   const [productConfig, setProductConfig] = useState<any>({});
   const [blocks, setBlocks] = useState<PageBlock[]>([]);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, use } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { Button } from "@/components/ui/Button";
 import { 
@@ -10,6 +10,7 @@ import {
   CreditCard, ExternalLink, Globe
 } from "lucide-react";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/Input";
@@ -25,8 +26,9 @@ const WIDGET_TYPES = [
   { id: 'custom-html', label: 'HTML tuỳ chỉnh', icon: Globe, description: 'Chèn mã HTML hoặc Text' },
 ];
 
-export default function SidebarEditor({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params);
+export default function SidebarEditor() {
+  const { id } = useParams() as { id: string };
+
   const [sidebar, setSidebar] = useState<any>(null);
   const [widgets, setWidgets] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);

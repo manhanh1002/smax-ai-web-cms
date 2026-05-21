@@ -53,8 +53,16 @@ export function PostEditor({ id }: PostEditorProps) {
     const { data, error } = await supabase.from("posts").select("*").eq("id", id).single();
     if (data) {
       setPost({
-        ...data,
-        blocks: data.content || [] // Mapping 'content' from DB to 'blocks' for UI
+        title: data.title || "",
+        slug: data.slug || "",
+        summary: data.summary || "",
+        featured_image: data.featured_image || "",
+        status: data.status || "draft",
+        category_id: data.category_id || "",
+        seo_title: data.seo_title || "",
+        seo_description: data.seo_description || "",
+        seo_keywords: Array.isArray(data.seo_keywords) ? data.seo_keywords : [],
+        blocks: Array.isArray(data.content) ? data.content : []
       });
     }
     setLoading(false);
@@ -133,7 +141,7 @@ export function PostEditor({ id }: PostEditorProps) {
             {/* Title & Slug */}
             <div className="space-y-4">
               <textarea
-                value={post.title}
+                value={post.title || ""}
                 onChange={(e) => setPost({ ...post, title: e.target.value })}
                 placeholder="Tiêu đề bài viết..."
                 className="w-full text-4xl font-black text-slate-900 bg-transparent border-none outline-none resize-none placeholder:text-slate-200 h-auto"
@@ -144,7 +152,7 @@ export function PostEditor({ id }: PostEditorProps) {
                 <Globe className="w-3.5 h-3.5" />
                 <span>/blog/</span>
                 <input 
-                  value={post.slug}
+                  value={post.slug || ""}
                   onChange={(e) => setPost({ ...post, slug: e.target.value })}
                   placeholder="duong-dan-bai-viet"
                   className="bg-transparent border-none outline-none flex-1 font-bold text-slate-600"
@@ -174,7 +182,7 @@ export function PostEditor({ id }: PostEditorProps) {
             <div className="space-y-2">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Chuyên mục</label>
               <select 
-                value={post.category_id}
+                value={post.category_id || ""}
                 onChange={(e) => setPost({ ...post, category_id: e.target.value })}
                 className="w-full h-12 px-4 rounded-xl border border-slate-100 bg-slate-50 text-sm outline-none focus:border-primary transition-all"
               >
@@ -211,7 +219,7 @@ export function PostEditor({ id }: PostEditorProps) {
             <div className="space-y-2">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Tóm tắt bài viết (AI-Ready)</label>
               <textarea 
-                value={post.summary}
+                value={post.summary || ""}
                 onChange={(e) => setPost({ ...post, summary: e.target.value })}
                 placeholder="Tóm tắt ngắn gọn nội dung chính cho AI..."
                 className="w-full h-32 p-4 rounded-xl border border-slate-100 bg-slate-50 text-xs text-slate-600 outline-none focus:border-primary transition-all resize-none"
@@ -221,7 +229,7 @@ export function PostEditor({ id }: PostEditorProps) {
             <div className="space-y-2">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">SEO Title</label>
               <input 
-                value={post.seo_title}
+                value={post.seo_title || ""}
                 onChange={(e) => setPost({ ...post, seo_title: e.target.value })}
                 placeholder="Tiêu đề hiển thị trên Google..."
                 className="w-full h-11 px-4 rounded-xl border border-slate-100 bg-slate-50 text-xs outline-none focus:border-primary transition-all"
@@ -231,7 +239,7 @@ export function PostEditor({ id }: PostEditorProps) {
             <div className="space-y-2">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Keywords (Entity Mapping)</label>
               <input 
-                value={post.seo_keywords.join(", ")}
+                value={(post.seo_keywords || []).join(", ")}
                 onChange={(e) => setPost({ ...post, seo_keywords: e.target.value.split(",").map(s => s.trim()) })}
                 placeholder="ai marketing, smax platform..."
                 className="w-full h-11 px-4 rounded-xl border border-slate-100 bg-slate-50 text-xs outline-none focus:border-primary transition-all"

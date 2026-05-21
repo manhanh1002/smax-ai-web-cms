@@ -158,7 +158,8 @@ const TOOLS = [
         id: { type: "string" },
         name: { type: "string" },
         description: { type: "string" },
-        steps: { type: "array" }
+        steps: { type: "array" },
+        settings: { type: "object" }
       },
       required: ["name"]
     }
@@ -192,6 +193,45 @@ const TOOLS = [
         conditions: { type: "object" }
       },
       required: ["name"]
+    }
+  },
+  {
+    name: "list_notification_bars",
+    description: "List top notification bars (ID, name, status, statistics).",
+    inputSchema: { type: "object", properties: {} }
+  },
+  {
+    name: "get_notification_bar",
+    description: "Retrieve full config and contents of a specific notification bar.",
+    inputSchema: {
+      type: "object",
+      properties: { id: { type: "string" } },
+      required: ["id"]
+    }
+  },
+  {
+    name: "save_notification_bar",
+    description: "Create or update a top notification bar.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        id: { type: "string" },
+        name: { type: "string" },
+        is_active: { type: "boolean" },
+        content: { type: "object" },
+        settings: { type: "object" },
+        conditions: { type: "object" }
+      },
+      required: ["name"]
+    }
+  },
+  {
+    name: "delete_notification_bar",
+    description: "Delete a top notification bar by ID.",
+    inputSchema: {
+      type: "object",
+      properties: { id: { type: "string" } },
+      required: ["id"]
     }
   },
 
@@ -370,6 +410,7 @@ export async function POST(request: NextRequest) {
           if (args.blocks) {
             pageData.blocks = args.blocks;
             pageData.content = args.blocks; // Sync content field
+            pageData.content_config = { blocks: args.blocks }; // Set content_config too!
           }
 
           let query = supabase.from("pages");
@@ -485,6 +526,9 @@ export async function POST(request: NextRequest) {
           if (args.steps) {
             formData.steps = args.steps;
           }
+          if (args.settings) {
+            formData.settings = args.settings;
+          }
 
           let query = supabase.from("forms");
           let result;
@@ -529,6 +573,53 @@ export async function POST(request: NextRequest) {
           }
           if (result.error) throw result.error;
           return mcpJsonResponse({ success: true, popup: result.data });
+        }
+
+        // --- 3.5. Notification Bars ---
+        case "list_notification_bars": {
+          const { data, error } = await supabase
+            .from("notification_bars")
+            .select("id, name, is_active, views_count, conversions_count, created_at, settings")
+            .order("created_at", { ascending: false });
+          if (error) throw error;
+          return mcpJsonResponse(data);
+        }
+
+        case "get_notification_bar": {
+          const { data, error } = await supabase
+            .from("notification_bars")
+            .select("*")
+            .eq("id", args.id)
+            .single();
+          if (error) throw error;
+          return mcpJsonResponse(data);
+        }
+
+        case "save_notification_bar": {
+          const barData = {
+            name: args.name,
+            updated_at: new Date().toISOString()
+          } as any;
+          if (args.is_active !== undefined) barData.is_active = args.is_active;
+          if (args.content) barData.content = args.content;
+          if (args.settings) barData.settings = args.settings;
+          if (args.conditions) barData.conditions = args.conditions;
+
+          let query = supabase.from("notification_bars");
+          let result;
+          if (args.id) {
+            result = await query.update(barData).eq("id", args.id).select().single();
+          } else {
+            result = await query.insert(barData).select().single();
+          }
+          if (result.error) throw result.error;
+          return mcpJsonResponse({ success: true, notification_bar: result.data });
+        }
+
+        case "delete_notification_bar": {
+          const { error } = await supabase.from("notification_bars").delete().eq("id", args.id);
+          if (error) throw error;
+          return mcpJsonResponse({ success: true, message: `Notification bar ${args.id} deleted` });
         }
 
         // --- 4. Analytics & Lead list ---
