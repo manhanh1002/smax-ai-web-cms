@@ -4,38 +4,57 @@ This guide documents the Smax AI Copilot MCP (Model Context Protocol) API. Other
 
 ---
 
-## 1. Connection & Handshake
+## 1. Connection & Handshake (Development & Production)
 
-The local development server runs the MCP server over SSE (Server-Sent Events) at:
-`http://localhost:3000/api/mcp/sse?token=smax_mcp_363adca178bb2fc1aa68766a`
+The Smax AI Copilot MCP Server uses **SSE (Server-Sent Events)**. To connect:
 
-### Step 1: Handshake (SSE Connection)
-Send a GET request to the URL with the header `Accept: text/event-stream`. The server will return a stream of events. Listen for the `event: endpoint` message to extract the URL path for sending client commands.
+### Step 1: Obtain SSE Endpoint URL
+1. Access the Admin Panel at `/admin/settings` (or the equivalent production domain dashboard).
+2. Enable **MCP Server** and generate/copy the connection details:
+   - **Production URL template:** `https://[your-domain]/api/mcp/sse?token=[mcp_token]`
+   - **Local URL template:** `http://localhost:3000/api/mcp/sse?token=[mcp_token]`
 
-### Step 2: Initialize
-Send a POST request to the endpoint found in Step 1 with the following JSON-RPC payload:
+### Step 2: Configure Client Integrations
+You can register this MCP server in tool-using agents (e.g., Claude Desktop, Antigravity, Cline) via `mcp_config.json`:
 ```json
 {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "method": "initialize",
-  "params": {
-    "protocolVersion": "2024-11-05",
-    "capabilities": {},
-    "clientInfo": { "name": "mcp-agent-client", "version": "1.0.0" }
+  "mcpServers": {
+    "smax-ai-copilot": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/client-sse",
+        "https://[your-domain]/api/mcp/sse?token=[mcp_token]"
+      ]
+    }
   }
 }
 ```
 
-### Step 3: List Tools
-List all available tools by calling `tools/list`:
-```json
-{
-  "jsonrpc": "2.0",
-  "id": 2,
-  "method": "tools/list"
-}
-```
+### Step 3: Handshake Protocol
+1. **Connect to SSE Stream**: Send a GET request to the SSE URL with the header `Accept: text/event-stream`.
+2. **Retrieve Message Endpoint**: Listen for the `event: endpoint` message from the stream to extract the relative POST URL path (e.g., `/api/mcp/messages?token=[mcp_token]&sessionId=[session_id]`).
+3. **Initialize JSON-RPC**: Send a POST request to that message endpoint:
+   ```json
+   {
+     "jsonrpc": "2.0",
+     "id": 1,
+     "method": "initialize",
+     "params": {
+       "protocolVersion": "2024-11-05",
+       "capabilities": {},
+       "clientInfo": { "name": "mcp-agent-client", "version": "1.0.0" }
+     }
+   }
+   ```
+4. **List Tools**: Send a POST request to list the available tools:
+   ```json
+   {
+     "jsonrpc": "2.0",
+     "id": 2,
+     "method": "tools/list"
+   }
+   ```
 
 ---
 
@@ -250,3 +269,20 @@ When writing tools that create or update these items, ensure you:
 1.  **Never leave title/name fields blank**: Smax UI relies on headings to draw elements, so ensure a descriptive name is always passed.
 2.  **Avoid hardcoding IDs on inserts**: Let the server generate UUIDs by omitting the `id` field when creating new entries. Include the `id` string strictly for edits/updates.
 3.  **Sync related fields**: When editing blocks in Landing Pages, keep them in `blocks` and `content_config` structures. For blog posts, write content as HTML string in the `html_content` argument.
+4.  **Enforce strict JSON schema conformance**: Check schemas to avoid database errors and Next.js frontend hydration or runtime page rendering crashes.
+
+---
+
+## 4. Agent Quality Self-Correction & Iterative Refinement (Crucial)
+
+To ensure the highest quality results, every agent connecting to this MCP server MUST adhere to the following workflow for quality control:
+
+1.  **Read and Analyze First**: Before making any modification, fetch the existing resource using the relevant `get_*` or `list_*` tools to fully inspect the current layout, blocks, settings, and structural patterns. Do not guess schemas or design structures.
+2.  **Verify Quality Post-Generation**: After calling `save_page`, `save_form`, `save_popup`, `save_blog_post`, or `save_notification_bar`:
+    *   **Proactively read back the newly saved resource** using its ID.
+    *   Inspect the returned structure, blocks, contents, and settings carefully.
+    *   Ensure there are no missing blocks, misplaced parameters, empty text blocks, or generic placeholders.
+3.  **Iterative Self-Update**:
+    *   Evaluate the visual hierarchy, completeness, responsiveness, and aesthetic appeal of the generated config.
+    *   If any part of the generated content/settings is subpar, lacks styling, or contains syntax/structural omissions, **you must immediately call the save tool again** with the updated, refined configuration.
+    *   Repeat this verification and refinement cycle until you are 100% confident that the resource is premium, modern, visually outstanding, and renders with zero errors.
