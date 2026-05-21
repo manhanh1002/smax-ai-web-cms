@@ -280,12 +280,16 @@ When writing tools that create or update these items, ensure you:
 
 To ensure the highest quality results, every agent connecting to this MCP server MUST adhere to the following workflow for quality control:
 
-1.  **Read and Analyze First**: Before making any modification, fetch the existing resource using the relevant `get_*` or `list_*` tools to fully inspect the current layout, blocks, settings, and structural patterns. Do not guess schemas or design structures.
-2.  **Verify Quality Post-Generation**: After calling `save_page`, `save_form`, `save_popup`, `save_blog_post`, or `save_notification_bar`:
+1.  **Study Existing Designs & Content Styles (Learn from Production)**:
+    *   For **Landing Pages** and **Blog Posts**, do not build blindly. First, call `list_pages` or `list_blog_posts` to inspect already published or active entries.
+    *   Read the detailed JSON/HTML structures of those published items (using `get_page` or `get_blog_post`) to **study their copywriting style, block layouts, design tokens, color coordination, and structural flow**.
+    *   Use these existing high-quality templates as inspiration to design and refine new content or layouts based on the user's specific request.
+2.  **Read and Analyze Target Resource First**: Before making any modification to an existing item, fetch its current state to understand its schema, variables, and formatting. Do not assume or guess.
+3.  **Verify Quality Post-Generation**: After calling `save_page`, `save_form`, `save_popup`, `save_blog_post`, or `save_notification_bar`:
     *   **Proactively read back the newly saved resource** using its ID.
     *   Inspect the returned structure, blocks, contents, and settings carefully.
     *   Ensure there are no missing blocks, misplaced parameters, empty text blocks, or generic placeholders.
-3.  **Iterative Self-Update**:
+4.  **Iterative Self-Update**:
     *   Evaluate the visual hierarchy, completeness, responsiveness, and aesthetic appeal of the generated config.
     *   If any part of the generated content/settings is subpar, lacks styling, or contains syntax/structural omissions, **you must immediately call the save tool again** with the updated, refined configuration.
     *   Repeat this verification and refinement cycle until you are 100% confident that the resource is premium, modern, visually outstanding, and renders with zero errors.
