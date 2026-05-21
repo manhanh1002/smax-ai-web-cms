@@ -360,7 +360,7 @@ export default function PageEditor({ params }: { params: Promise<{ id: string }>
       
       // Reload iframe src
       if (iframeRef.current) {
-        iframeRef.current.src = `/vi/preview-frame/${id}`;
+        iframeRef.current.src = `/preview-frame/${id}`;
       }
     }
     setSaving(false);
@@ -551,7 +551,7 @@ export default function PageEditor({ params }: { params: Promise<{ id: string }>
           <Button
             variant="outline"
             size="sm"
-            onClick={() => window.open(`/vi/${slug}`, "_blank")}
+            onClick={() => window.open(`/${slug}`, "_blank")}
             className="rounded-xl"
             disabled={!!previewedVersion}
           >
@@ -674,7 +674,7 @@ export default function PageEditor({ params }: { params: Promise<{ id: string }>
                 >
                   <iframe 
                     ref={iframeRef}
-                    src={`/vi/preview-frame/${id}`}
+                    src={`/preview-frame/${id}`}
                     className="w-full h-full border-none"
                     onLoad={() => {
                       // Send initial config when iframe loads

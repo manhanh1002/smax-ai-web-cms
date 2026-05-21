@@ -132,7 +132,7 @@ export default function MembersPage() {
         return;
       }
 
-      const response = await fetch("/vi/api/admin/members", {
+      const response = await fetch("/api/admin/members", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -195,7 +195,7 @@ export default function MembersPage() {
         return;
       }
 
-      const response = await fetch("/vi/api/admin/members", {
+      const response = await fetch("/api/admin/members", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -238,7 +238,7 @@ export default function MembersPage() {
         return;
       }
 
-      const response = await fetch(`/vi/api/admin/members?id=${memberToDelete.id}`, {
+      const response = await fetch(`/api/admin/members?id=${memberToDelete.id}`, {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${token}`

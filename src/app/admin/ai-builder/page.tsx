@@ -92,7 +92,7 @@ export default function AIBuilderPage() {
     setMessages((prev) => [...prev, userMsg]);
 
     try {
-      const response = await fetch("/vi/api/ai/build-page", {
+      const response = await fetch("/api/ai/build-page", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -143,7 +143,7 @@ export default function AIBuilderPage() {
     try {
       const blockSchema = generateAISchema();
 
-      const response = await fetch("/vi/api/ai/build-page", {
+      const response = await fetch("/api/ai/build-page", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

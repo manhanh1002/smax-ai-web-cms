@@ -375,7 +375,7 @@ export default function AdminPagesList() {
                         >
                           <Settings className="w-4 h-4 text-slate-500" />
                         </Button>
-                        <a href={`/vi/${page.slug}`} target="_blank" rel="noreferrer">
+                        <a href={`/${page.slug}`} target="_blank" rel="noreferrer">
                           <Button variant="ghost" size="sm" className="h-10 w-10 p-0 rounded-2xl hover:bg-white hover:shadow-md transition-all">
                             <ExternalLink className="w-4 h-4 text-slate-400" />
                           </Button>
