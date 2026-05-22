@@ -88,7 +88,14 @@ To ensure that the created resources do not cause hydration crashes or layout br
       "secondaryBtn": "Xem bảng giá",
       "secondaryBtnUrl": "#pricing",
       "image": "https://hub.cdp.vn/hero.png",
-      "darkMode": false
+      "darkMode": false,
+      "settings": {
+        "colorMode": "light",
+        "paddingTop": "large",
+        "paddingBottom": "large",
+        "containerWidth": "boxed",
+        "background": "default"
+      }
     }
   },
   {
@@ -159,6 +166,40 @@ Future agents must follow the exact key names below for each block type to guara
    - `content` (string, required): HTML markup representing text, tables, lists, or custom assets.
    - `darkMode` (boolean, optional).
    - *Custom CSS capabilities:* Because the frontend renders `content` using `dangerouslySetInnerHTML`, **agents can write custom CSS inline or embed `<style>` tags directly** inside the HTML string. This gives full visual design control (e.g. `<style>.custom-banner { padding: 40px; border-radius: 20px; }</style><div class="custom-banner">...</div>`).
+
+### 2.1.2. Shared Block Design Settings (`settings`)
+All block types support a nested `settings` object inside their `data` payload. This controls common layout properties (defined in [shared.tsx](file:///Users/mac/Documents/Code-projects/smax-ai-web-v2/src/components/cms/block-editors/shared.tsx) and processed via [BlockWrapper.tsx](file:///Users/mac/Documents/Code-projects/smax-ai-web-v2/src/blocks/BlockWrapper.tsx)):
+
+*   **`colorMode`** (string, optional): `"light"` | `"dark"`. Switches the font color system and theme context.
+*   **`paddingTop`** / **`paddingBottom`** (string, optional): `"none"` | `"small"` | `"medium"` | `"large"` | `"xlarge"`. Controls top/bottom outer spacing (0px, 32px, 64px, 96px, 128px).
+*   **`containerWidth`** (string, optional): `"boxed"` (max-width `1280px`) | `"narrow"` (max-width `1024px`) | `"full"` (100% width).
+*   **`textAlign`** (string, optional): `"left"` | `"center"` | `"right"`. Alignment of textual elements inside the block.
+*   **`anchorId`** (string, optional): Custom unique ID for smooth-scroll linking (e.g., `#lien-he`).
+*   **`shadowSize`** (string, optional): `"none"` | `"sm"` | `"md"` | `"lg"` | `"xl"`. Container outer box-shadow depth.
+*   **`borderRadius`** (string, optional): `"none"` | `"md"` | `"lg"` | `"xl"` | `"full"`. Rounds the corners of the block container wrapper.
+*   **`hideOnMobile`** (boolean, optional): If `true`, hides this block on mobile screens.
+*   **`hideOnDesktop`** (boolean, optional): If `true`, hides this block on desktop screens.
+*   **`entranceAnimation`** (string, optional): `"none"` | `"fadeUp"` | `"fadeIn"` | `"slideIn"` | `"zoomIn"`. Triggers Framer Motion scroll entrance effects.
+*   **`background`** (string, optional): `"default"` (white) | `"muted"` (gray) | `"primary"` (theme color) | `"gradient"` (soft vertical flow) | `"custom"` (enables custom background settings).
+*   **`backgroundType`** (string, required only when `background` is `"custom"`): `"color"` | `"image"` | `"gradient"`.
+    *   If `backgroundType` is `"color"`: Use `customBackgroundColor` (hex value, e.g. `"#ffffff"`).
+    *   If `backgroundType` is `"image"`: Use `backgroundImage` (string URL).
+    *   If `backgroundType` is `"gradient"`: Use `customGradient` (raw CSS linear/radial-gradient string) OR `gradientStart` (hex) + `gradientEnd` (hex) + `gradientAngle` (number degrees).
+
+#### Block Custom CSS Scoping Rules
+*   **`customCss`** (string, optional): CSS code injected into the page header dynamically.
+*   **Scoped Replacement**: Any occurrence of the keyword `selector` or `__BLOCK__` inside `customCss` is automatically replaced at runtime with the unique container ID (e.g., `#b-123` or `#your-anchor-id`).
+*   **Best Practice**: Always scope rules using `selector` to avoid bleed:
+    ```css
+    selector {
+      border-top: 1px solid rgba(226, 232, 240, 0.8);
+      background-clip: padding-box;
+    }
+    selector h2 {
+      font-size: 2.25rem;
+      letter-spacing: -0.05em;
+    }
+    ```
 
 ---
 
