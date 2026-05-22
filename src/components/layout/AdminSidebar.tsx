@@ -7,7 +7,7 @@ import {
   LayoutDashboard, FileText, Image as ImageIcon,
   LogOut, LayoutPanelTop, Users, Settings,
   Newspaper, ChevronDown, ChevronLeft,
-  PencilRuler, Sparkles, Presentation
+  PencilRuler, Sparkles, Presentation, BookOpen
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
@@ -38,6 +38,15 @@ const NAV_ITEMS: NavItem[] = [
   },
   { href: "/admin/ai-builder", label: "AI Builder", icon: Sparkles },
   { href: "/admin/slides", label: "Slide Builder", icon: Presentation },
+  {
+    label: "Khoá học",
+    icon: BookOpen,
+    children: [
+      { href: "/admin/courses", label: "Quản lý Khoá học" },
+      { href: "/admin/authors", label: "Quản lý Tác giả" },
+      { href: "/admin/courses/settings", label: "Cấu hình Khoá học" },
+    ]
+  },
   {
     label: "Blog",
     icon: Newspaper,

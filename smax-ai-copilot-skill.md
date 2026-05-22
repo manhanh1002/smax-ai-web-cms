@@ -1,6 +1,6 @@
 # Smax AI Copilot MCP Integration Guide (Copilot Skill)
 
-This guide documents the Smax AI Copilot MCP (Model Context Protocol) API. Other AI agents or clients can read this file to understand how to connect, handshake, and invoke CRUD operations for Pages, Blog Posts, Forms, Popups, and Top Notification Bars.
+This guide documents the Smax AI Copilot MCP (Model Context Protocol) API. Other AI agents or clients can read this file to understand how to connect, handshake, and invoke CRUD operations for Pages, Presentation Slides, Blog Posts, Forms, Popups, and Top Notification Bars.
 
 ---
 
@@ -167,6 +167,15 @@ Future agents must follow the exact key names below for each block type to guara
    - `darkMode` (boolean, optional).
    - *Custom CSS capabilities:* Because the frontend renders `content` using `dangerouslySetInnerHTML`, **agents can write custom CSS inline or embed `<style>` tags directly** inside the HTML string. This gives full visual design control (e.g. `<style>.custom-banner { padding: 40px; border-radius: 20px; }</style><div class="custom-banner">...</div>`).
 
+5. **Slide Grid Multi-Block Container (`slideGrid`)** *(Used especially for Presentation Slides)*:
+   - `layout` (string, required): Grid structure. Options: `"1x2"`, `"2x1"`, `"1-left-2-right"`, `"2-left-1-right"`, `"1-top-2-bottom"`, `"2-top-1-bottom"`, `"2x2"`.
+   - `gap` (string, optional): `"none"`, `"small"`, `"medium"`, `"large"`.
+   - `background` (string, optional): `"default"`, `"muted"`, `"dark"`, `"primary"`.
+   - `slots` (object, required): A key-value map containing the child blocks placed in the grid.
+     - Keys are `"slot0"`, `"slot1"`, `"slot2"`, `"slot3"` depending on the chosen layout length.
+     - Values are nested block objects (e.g. `{ "id": "...", "type": "hero", "data": {...} }`) or `null` if empty.
+     - *Crucial note:* `slideGrid` cannot be nested inside another `slideGrid` to prevent infinite recursive crashes.
+
 ### 2.1.2. Shared Block Design Settings (`settings`)
 All block types support a nested `settings` object inside their `data` payload. This controls common layout properties (defined in [shared.tsx](file:///Users/mac/Documents/Code-projects/smax-ai-web-v2/src/components/cms/block-editors/shared.tsx) and processed via [BlockWrapper.tsx](file:///Users/mac/Documents/Code-projects/smax-ai-web-v2/src/blocks/BlockWrapper.tsx)):
 
@@ -201,9 +210,24 @@ All block types support a nested `settings` object inside their `data` payload. 
     }
     ```
 
+    ```
+
 ---
 
-### 2.2. Blog Posts
+### 2.2. Presentation Slides
+*   **Listing**: `list_slides` (takes no arguments)
+*   **Getting**: `get_slide` (arguments: `{ id }`)
+*   **Deleting**: `delete_slide` (arguments: `{ id }`)
+*   **Saving**: `save_slide`
+    *   `title` (string, required): Slide title.
+    *   `slug` (string, required): URL path slug.
+    *   `status` (string): `"draft"` or `"published"`.
+    *   `blocks` (array, optional): Array of Smax AI block configuration objects for the slide.
+    *   *Note:* The `save_slide` tool automatically handles backend mappings (setting `type="slide"`, `layout_type="full"`, `hide_header=true`, etc.) so the slide renders in full screen properly. You can freely use any standard Page block inside a Slide, especially the `slideGrid` container for split-layouts.
+
+---
+
+### 2.3. Blog Posts
 *   **Listing**: `list_blog_posts` (takes no arguments)
 *   **Getting**: `get_blog_post` (arguments: `{ id }`)
 *   **Deleting**: `delete_blog_post` (arguments: `{ id }`)

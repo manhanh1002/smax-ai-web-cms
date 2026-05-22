@@ -20,6 +20,21 @@ interface SiteSettings {
   logo_url?: string;
   logo_dark_url?: string;
   favicon_url?: string;
+  course_config?: {
+    list_layout?: "grid" | "list";
+    banner_bg_style?: "dark" | "primary" | "gradient-royal" | "gradient-ocean" | "light" | "custom-image";
+    banner_image_url?: string;
+    banner_badge?: string;
+    banner_title?: string;
+    banner_description?: string;
+    banner_search_placeholder?: string;
+    show_prices?: boolean;
+    show_progress?: boolean;
+    primary_color_override?: string;
+    detail_back_text?: string;
+    detail_learning_type_text?: string;
+    detail_cta_disclaimer?: string;
+  };
 }
 
 const SiteSettingsContext = createContext<{
