@@ -115,6 +115,7 @@ To ensure that the created resources do not cause hydration crashes or layout br
     *   `seo_title` (string, optional): Custom title tag for SEO optimization.
     *   `seo_description` (string, optional): Custom meta description for search engines.
     *   `seo_keywords` (string, optional): Comma-separated keywords for SEO targeting.
+    *   `category_id` (string, optional): The UUID of the blog category to link the post to. Use `list_blog_categories` to list existing categories or `create_blog_category` to create one first.
 
 ---
 

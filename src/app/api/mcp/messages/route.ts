@@ -103,7 +103,8 @@ const TOOLS = [
         status: { type: "string", enum: ["draft", "published"] },
         seo_title: { type: "string", description: "Meta title for SEO" },
         seo_description: { type: "string", description: "Meta description for SEO" },
-        seo_keywords: { type: "string", description: "Meta keywords (comma separated) for SEO" }
+        seo_keywords: { type: "string", description: "Meta keywords (comma separated) for SEO" },
+        category_id: { type: "string", description: "Optional UUID of the blog category" }
       },
       required: ["title", "slug"]
     }
@@ -463,6 +464,7 @@ export async function POST(request: NextRequest) {
             updated_at: new Date().toISOString()
           } as any;
 
+          if (args.category_id !== undefined) postData.category_id = args.category_id || null;
           if (args.seo_title !== undefined) postData.seo_title = args.seo_title;
           if (args.seo_description !== undefined) postData.seo_description = args.seo_description;
           if (args.seo_keywords !== undefined) {
