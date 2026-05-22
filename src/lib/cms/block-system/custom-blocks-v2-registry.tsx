@@ -83,12 +83,16 @@ import { TeamGridDef }        from "@/blocks/team-grid/definition";
 import { TimelineDef }        from "@/blocks/timeline/definition";
 import { VideoSectionDef }    from "@/blocks/video-section/definition";
 import { CustomCodeBlockDef } from "@/blocks/custom-code/definition";
+import { SlideGridDef } from "@/blocks/slide-grid/definition";
+import { SlideGridDispatcher } from "@/blocks/slide-grid/index";
+import { SlideGridEditor } from "@/blocks/slide-grid/editor";
 
 import type { BlockDefinition } from "@/blocks/types";
 
 // ── Assembled registry ────────────────────────────────────────────────────────
 export const CUSTOM_BLOCKS_V2: BlockDefinition[] = [
   // Layout
+  { ...SlideGridDef,       renderer: SlideGridDispatcher,       editor: SlideGridEditor },
   { ...HeroCenteredDef,    renderer: HeroCenteredDispatcher,    editor: HeroCenteredEditor },
   { ...PageHeaderDef,      renderer: PageHeaderDispatcher,      editor: PageHeaderEditor },
 

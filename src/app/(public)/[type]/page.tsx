@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabase";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import PageRenderer from "@/components/cms/PageRenderer";
 import { ProductTemplate } from "@/components/templates/ProductTemplate";
 import StandardLayout from "@/components/layout/StandardLayout";
@@ -16,6 +16,10 @@ export default async function PublicPage({ params }: { params: Promise<{ type: s
     .single();
 
   if (page) {
+    // Redirect slide-type pages to presentation view
+    if (page.type === 'slide') {
+      redirect(`/presentation/${page.id}`);
+    }
     // Render content based on type
     const renderContent = () => {
       if (page.type === 'product') {

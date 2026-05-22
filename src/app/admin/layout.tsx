@@ -79,6 +79,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             pathname.startsWith("/admin/sidebars") || 
             pathname.startsWith("/admin/blocks") || 
             pathname.startsWith("/admin/theme") || 
+            pathname.startsWith("/admin/slides") || 
             pathname.startsWith("/admin/ai-builder")) {
           isAllowed = !!permissions.pages;
         } else if (pathname.startsWith("/admin/blog") || pathname.startsWith("/admin/blog-setting")) {

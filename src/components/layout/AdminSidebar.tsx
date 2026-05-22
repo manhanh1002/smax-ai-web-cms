@@ -7,7 +7,7 @@ import {
   LayoutDashboard, FileText, Image as ImageIcon,
   LogOut, LayoutPanelTop, Users, Settings,
   Newspaper, ChevronDown, ChevronLeft,
-  PencilRuler, Sparkles
+  PencilRuler, Sparkles, Presentation
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
@@ -37,6 +37,7 @@ const NAV_ITEMS: NavItem[] = [
     ]
   },
   { href: "/admin/ai-builder", label: "AI Builder", icon: Sparkles },
+  { href: "/admin/slides", label: "Slide Builder", icon: Presentation },
   {
     label: "Blog",
     icon: Newspaper,

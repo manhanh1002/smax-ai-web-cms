@@ -71,6 +71,50 @@ const TOOLS = [
     }
   },
 
+  // 1.5. Slides
+  {
+    name: "list_slides",
+    description: "Get a list of all presentation slides (ID, title, slug, status).",
+    inputSchema: { type: "object", properties: {} }
+  },
+  {
+    name: "get_slide",
+    description: "Retrieve full details and JSON layout blocks of a specific slide.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        id: { type: "string", description: "The UUID of the slide" }
+      },
+      required: ["id"]
+    }
+  },
+  {
+    name: "save_slide",
+    description: "Create or update a presentation slide (upsert blocks and title). Slides use the 'pages' table under the hood but with specific layout settings.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        id: { type: "string", description: "Optional UUID to update an existing slide" },
+        title: { type: "string", description: "Slide title" },
+        slug: { type: "string", description: "URL path slug" },
+        blocks: { type: "array", description: "Array of Smax AI block configuration objects for the slide" },
+        status: { type: "string", enum: ["draft", "published"] }
+      },
+      required: ["title", "slug"]
+    }
+  },
+  {
+    name: "delete_slide",
+    description: "Delete a presentation slide by ID.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        id: { type: "string", description: "UUID of slide to delete" }
+      },
+      required: ["id"]
+    }
+  },
+
   // 2. Blog
   {
     name: "list_blog_posts",
@@ -433,6 +477,63 @@ export async function POST(request: NextRequest) {
           if (error) throw error;
           return mcpJsonResponse({ success: true, message: `Page ${args.id} deleted` });
         }
+
+        // --- 1.5. Slides ---
+        case "list_slides": {
+          const { data, error } = await supabase
+            .from("pages")
+            .select("id, title, slug, status, created_at")
+            .eq("type", "slide")
+            .order("created_at", { ascending: false });
+          if (error) throw error;
+          return mcpJsonResponse(data);
+        }
+
+        case "get_slide": {
+          const { data, error } = await supabase
+            .from("pages")
+            .select("*")
+            .eq("id", args.id)
+            .eq("type", "slide")
+            .single();
+          if (error) throw error;
+          return mcpJsonResponse(data);
+        }
+
+        case "save_slide": {
+          const slideData = {
+            title: args.title,
+            slug: args.slug,
+            status: args.status || "draft",
+            type: "slide",
+            layout_type: "full",
+            hide_header: true,
+            hide_footer: true,
+            updated_at: new Date().toISOString()
+          } as any;
+          if (args.blocks) {
+            slideData.blocks = args.blocks;
+            slideData.content = args.blocks; // Sync content field
+            slideData.content_config = { blocks: args.blocks }; // Set content_config too!
+          }
+
+          let query = supabase.from("pages");
+          let result;
+          if (args.id) {
+            result = await query.update(slideData).eq("id", args.id).select().single();
+          } else {
+            result = await query.insert(slideData).select().single();
+          }
+          if (result.error) throw result.error;
+          return mcpJsonResponse({ success: true, slide: result.data });
+        }
+
+        case "delete_slide": {
+          const { error } = await supabase.from("pages").delete().eq("id", args.id).eq("type", "slide");
+          if (error) throw error;
+          return mcpJsonResponse({ success: true, message: `Slide ${args.id} deleted` });
+        }
+
 
         // --- 2. Blog posts ---
         case "list_blog_posts": {

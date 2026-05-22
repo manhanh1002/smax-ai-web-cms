@@ -257,9 +257,10 @@ function BlockPickerModal({
     setCmsBlocks(data || []);
     setLoadingCms(false);
   }
-
-  const activeBlocks = MASTER_BLOCK_REGISTRY.filter(b => !disabledBlocks.includes(b.type));
-
+  const activeBlocks = MASTER_BLOCK_REGISTRY.filter(b => 
+    !disabledBlocks.includes(b.type) && 
+    b.type !== "slideGrid"
+  );
   const PICKER_TABS = [
     { id: "system", label: "Hệ thống", icon: Package },
     { id: "global", label: "Global Blocks", icon: Globe },
