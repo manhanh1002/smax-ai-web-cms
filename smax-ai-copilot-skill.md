@@ -79,23 +79,86 @@ To ensure that the created resources do not cause hydration crashes or layout br
   {
     "type": "hero",
     "data": {
+      "badge": "🚀 GIẢI PHÁP MỚI",
       "title": "Giải Pháp CRM & AI Chatbot",
-      "subtitle": "Tối ưu hóa quy trình chăm sóc khách hàng.",
-      "primaryBtnText": "Khám phá ngay",
+      "highlight": "Tự động hóa 90%",
+      "subtitle": "Tối ưu hóa quy trình chăm sóc khách hàng và bán hàng tự động.",
+      "primaryBtn": "Khám phá ngay",
       "primaryBtnUrl": "#contact",
-      "secondaryBtnText": "Xem bảng giá",
-      "secondaryBtnUrl": "#pricing"
+      "secondaryBtn": "Xem bảng giá",
+      "secondaryBtnUrl": "#pricing",
+      "image": "https://hub.cdp.vn/hero.png",
+      "darkMode": false
     }
   },
   {
     "type": "features",
     "data": {
-      "title": "Tính Năng Nổi Bật",
-      "subtitle": "Smax AI mang lại những công cụ mạnh mẽ."
+      "badge": "TÍNH NĂNG",
+      "title": "Mang Lại Hiệu Quả Vượt Trội",
+      "titleHighlight": "Smax AI",
+      "subtitle": "Các công cụ mạnh mẽ hỗ trợ doanh nghiệp.",
+      "items": [
+        {
+          "tag": "CRM TÍCH HỢP",
+          "title": "Quản lý khách hàng tập trung",
+          "points": [
+            "Lưu trữ dữ liệu tự động",
+            "Phân loại lead thông minh"
+          ],
+          "stat": "Tăng <strong>35%</strong> tỷ lệ chốt đơn.",
+          "image": "https://hub.cdp.vn/feature1.png",
+          "reversed": false
+        }
+      ],
+      "darkMode": false
     }
   }
 ]
 ```
+
+#### Detailed Schema of Visual Blocks & Design Options:
+Future agents must follow the exact key names below for each block type to guarantee correct rendering:
+
+1. **Hero Main (`hero`)**:
+   - `badge` (string, optional): Small label pill at the top.
+   - `title` (string, optional): Main big heading.
+   - `highlight` (string, optional): Text appended to title with orange highlight color.
+   - `subtitle` (string, optional): Descriptive subtext.
+   - `primaryBtn` (string, optional): Text for the primary action button.
+   - `primaryBtnUrl` (string, optional): Destination URL.
+   - `secondaryBtn` (string, optional): Text for the secondary action button.
+   - `secondaryBtnUrl` (string, optional): Destination URL.
+   - `image` (string, optional): URL of the showcase image.
+   - `darkMode` (boolean, optional): Switches background to deep navy `#0F1836`.
+
+2. **Features Rows (`features`)**:
+   - `badge`, `title`, `titleHighlight`, `subtitle`, `darkMode` (standard fields).
+   - `items` (array, required): Array of feature items:
+     - `tag` (string, optional): Small sub-header.
+     - `title` (string, required): Feature headline.
+     - `points` (array of strings, optional): Bullet points.
+     - `stat` (string, optional): HTML string with key statistics (renders with styled border-left).
+     - `image` (string, optional): Side image URL.
+     - `reversed` (boolean, optional): Reverse column layout.
+
+3. **Pricing Comparison (`pricing`)**:
+   - `badge`, `title`, `subtitle`, `darkMode` (standard fields).
+   - `plans` (array, required): Array of pricing objects:
+     - `name` (string, required): Plan name.
+     - `price` (string, required): Price text (e.g. `$49`).
+     - `period` (string, optional): Timeframe (e.g. `tháng`, `năm`).
+     - `description` (string, required): Brief text description.
+     - `features` (array of strings, required): Included perks (renders checkmarks).
+     - `notIncluded` (array of strings, optional): Excluded perks (renders crossed out).
+     - `btnText` (string, required): Action button text.
+     - `btnUrl` (string, required): Action link.
+     - `highlighted` (boolean, optional): Enlarges the card with orange background.
+
+4. **Rich Text & Custom CSS (`richText`)**:
+   - `content` (string, required): HTML markup representing text, tables, lists, or custom assets.
+   - `darkMode` (boolean, optional).
+   - *Custom CSS capabilities:* Because the frontend renders `content` using `dangerouslySetInnerHTML`, **agents can write custom CSS inline or embed `<style>` tags directly** inside the HTML string. This gives full visual design control (e.g. `<style>.custom-banner { padding: 40px; border-radius: 20px; }</style><div class="custom-banner">...</div>`).
 
 ---
 
