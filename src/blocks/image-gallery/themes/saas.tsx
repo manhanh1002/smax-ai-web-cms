@@ -6,10 +6,15 @@ import type { ImageGalleryData } from "../definition";
 export function ImageGallerySaaS({ data, isDark }: { data: ImageGalleryData; isDark?: boolean }) {
   const [selected, setSelected] = useState<number|null>(null);
   const [cat, setCat] = useState<string|null>(null);
-  const cols = data.columns ?? 3;
-  const gridCols: Record<number,string> = { 2:"grid-cols-1 md:grid-cols-2", 3:"grid-cols-1 md:grid-cols-2 lg:grid-cols-3", 4:"grid-cols-2 md:grid-cols-3 lg:grid-cols-4" };
   const categories = useMemo(() => [...new Set((data.images??[]).map(i=>i.category).filter(Boolean))] as string[], [data.images]);
   const filtered = useMemo(() => cat ? (data.images??[]).filter(i=>i.category===cat) : (data.images??[]), [data.images, cat]);
+  const cols = data.columns ?? 3;
+  const imgCount = filtered.length;
+  const gridCols: Record<number,string> = {
+    2: imgCount === 1 ? "grid-cols-1 max-w-md mx-auto" : "grid-cols-1 md:grid-cols-2",
+    3: imgCount === 1 ? "grid-cols-1 max-w-md mx-auto" : imgCount === 2 ? "grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto" : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
+    4: imgCount === 1 ? "grid-cols-1 max-w-md mx-auto" : imgCount === 2 ? "grid-cols-2 max-w-4xl mx-auto" : imgCount === 3 ? "grid-cols-2 md:grid-cols-3 lg:grid-cols-3 max-w-5xl mx-auto" : "grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+  };
 
   return (
     <div className="max-w-6xl mx-auto">

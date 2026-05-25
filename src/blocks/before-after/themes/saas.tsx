@@ -27,7 +27,7 @@ export function BeforeAfterSaaS({ data, isDark }: { data: BeforeAfterData; isDar
         {data.beforeLabel && <div className="absolute top-4 left-4 bg-black/50 text-white px-3 py-1.5 rounded-[var(--radius)] text-sm font-bold backdrop-blur">{data.beforeLabel}</div>}
         {data.afterLabel  && <div className="absolute top-4 right-4 bg-black/50 text-white px-3 py-1.5 rounded-[var(--radius)] text-sm font-bold backdrop-blur">{data.afterLabel}</div>}
       </div>
-      <p className={`text-center mt-3 text-sm ${isDark?"text-white/40":"text-[var(--secondary)]/40"}`}>Kéo để so sánh</p>
+      <p className={`text-center mt-3 text-sm ${isDark?"text-white/40":"text-[var(--secondary)]/40"}`}>{data.helperText || "Kéo để so sánh"}</p>
     </div>
   );
 }

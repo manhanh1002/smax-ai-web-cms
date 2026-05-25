@@ -1,7 +1,6 @@
 import { supabase } from "@/lib/supabase";
 import { notFound, redirect } from "next/navigation";
 import PageRenderer from "@/components/cms/PageRenderer";
-import { ProductTemplate } from "@/components/templates/ProductTemplate";
 import StandardLayout from "@/components/layout/StandardLayout";
 
 
@@ -22,11 +21,7 @@ export default async function PublicPage({ params }: { params: Promise<{ type: s
     }
     // Render content based on type
     const renderContent = () => {
-      if (page.type === 'product') {
-        return <ProductTemplate config={page.content_config || {}} />;
-      }
-      const blocks = page.content_config?.blocks || [];
-      return <PageRenderer blocks={blocks} />;
+      return <PageRenderer config={page.content_config || {}} />;
     };
 
     return (

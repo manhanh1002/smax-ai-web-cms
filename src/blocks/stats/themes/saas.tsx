@@ -67,9 +67,9 @@ export function StatsSaaS({ data, isDark, settings }: { data: StatsBlockData; is
       <div className={cn(
         "grid gap-8 md:gap-12",
         columns === 1 ? "grid-cols-1" : 
-        columns === 2 ? "grid-cols-2" : 
-        columns === 3 ? "grid-cols-1 md:grid-cols-3" : 
-        "grid-cols-2 lg:grid-cols-4"
+        columns === 2 ? ((data.items??[]).length === 1 ? "grid-cols-1 max-w-md mx-auto" : "grid-cols-2") : 
+        columns === 3 ? ((data.items??[]).length === 1 ? "grid-cols-1 max-w-md mx-auto" : (data.items??[]).length === 2 ? "grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto" : "grid-cols-1 md:grid-cols-3") : 
+        ((data.items??[]).length === 1 ? "grid-cols-1 max-w-md mx-auto" : (data.items??[]).length === 2 ? "grid-cols-2 max-w-2xl mx-auto" : (data.items??[]).length === 3 ? "grid-cols-2 md:grid-cols-3 max-w-5xl mx-auto" : "grid-cols-2 lg:grid-cols-4")
       )}>
         {data.items?.map((stat, i) => (
           <motion.div

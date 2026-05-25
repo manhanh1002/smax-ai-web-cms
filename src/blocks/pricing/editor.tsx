@@ -9,7 +9,6 @@ import { PricingBlockData } from "./definition";
 import { BlockData } from "../types";
 
 export function PricingEditor({ data, onChange }: { data: BlockData<PricingBlockData>; onChange: (d: BlockData<PricingBlockData>) => void }) {
-  const [activeTab, setActiveTab] = useState<"content" | "design">("content");
   const [activeCatIdx, setActiveCatIdx] = useState(0);
   const u = (key: string, val: any) => onChange({ ...data, [key]: val });
   
@@ -68,40 +67,32 @@ export function PricingEditor({ data, onChange }: { data: BlockData<PricingBlock
 
   return (
     <div className="space-y-6">
-      <div className="flex border-b border-slate-200">
-        <button onClick={() => setActiveTab("content")} className={`flex items-center gap-2 px-4 py-3 text-sm font-bold border-b-2 transition-colors ${activeTab === "content" ? "border-blue-600 text-blue-600" : "border-transparent text-slate-500 hover:text-slate-800"}`}><Type className="w-4 h-4" /> Nội dung</button>
-        <button onClick={() => setActiveTab("design")} className={`flex items-center gap-2 px-4 py-3 text-sm font-bold border-b-2 transition-colors ${activeTab === "design" ? "border-blue-600 text-blue-600" : "border-transparent text-slate-500 hover:text-slate-800"}`}><LayoutTemplate className="w-4 h-4" /> Thiết kế</button>
+      {/* Pricing switcher configuration */}
+      <div className="p-6 bg-slate-50 border border-slate-100 rounded-2xl space-y-4">
+        <label className="text-xs font-black uppercase text-slate-400 tracking-widest">Cấu hình chung</label>
+        <div className="flex items-center gap-2 mb-4">
+          <input 
+            type="checkbox" 
+            checked={!!data.showSwitcher} 
+            onChange={e => u("showSwitcher", e.target.checked)} 
+            id="show-switcher" 
+            className="w-4 h-4"
+          />
+          <label htmlFor="show-switcher" className="text-sm font-bold">Hiển thị nút gạt Tháng/Năm</label>
+        </div>
+        
+        {data.showSwitcher && (
+          <div className="grid grid-cols-2 gap-4 animate-in slide-in-from-top-2 duration-300">
+            <Field label="Nhãn Tháng"><Inp value={data.monthlyLabel || ""} onChange={v => u("monthlyLabel", v)} /></Field>
+            <Field label="Nhãn Năm"><Inp value={data.yearlyLabel || ""} onChange={v => u("yearlyLabel", v)} /></Field>
+            <div className="col-span-2">
+              <Field label="Nhãn giảm giá (nếu có)"><Inp value={data.discountLabel || ""} onChange={v => u("discountLabel", v)} placeholder="Tiết kiệm 20%" /></Field>
+            </div>
+          </div>
+        )}
       </div>
 
-      {activeTab === "design" ? (
-        <div className="space-y-6 animate-in fade-in duration-200">
-          <div className="p-6 bg-slate-50 border border-slate-100 rounded-2xl space-y-4">
-            <label className="text-xs font-black uppercase text-slate-400 tracking-widest">Cấu hình chung</label>
-            <div className="flex items-center gap-2 mb-4">
-              <input 
-                type="checkbox" 
-                checked={!!data.showSwitcher} 
-                onChange={e => u("showSwitcher", e.target.checked)} 
-                id="show-switcher" 
-                className="w-4 h-4"
-              />
-              <label htmlFor="show-switcher" className="text-sm font-bold">Hiển thị nút gạt Tháng/Năm</label>
-            </div>
-            
-            {data.showSwitcher && (
-              <div className="grid grid-cols-2 gap-4 animate-in slide-in-from-top-2 duration-300">
-                <Field label="Nhãn Tháng"><Inp value={data.monthlyLabel || ""} onChange={v => u("monthlyLabel", v)} /></Field>
-                <Field label="Nhãn Năm"><Inp value={data.yearlyLabel || ""} onChange={v => u("yearlyLabel", v)} /></Field>
-                <div className="col-span-2">
-                  <Field label="Nhãn giảm giá (nếu có)"><Inp value={data.discountLabel || ""} onChange={v => u("discountLabel", v)} placeholder="Tiết kiệm 20%" /></Field>
-                </div>
-              </div>
-            )}
-          </div>
-          <BlockSettingsEditor settings={data.settings} onChange={v => onChange({ ...data, settings: v })} />
-        </div>
-      ) : (
-        <div className="space-y-8 animate-in fade-in duration-200">
+      <div className="space-y-8 animate-in fade-in duration-200">
           <div className="grid grid-cols-1 gap-4">
             <Field label="Badge"><Inp value={data.badge || ""} onChange={v => u("badge", v)} /></Field>
             <div className="grid grid-cols-2 gap-4">
@@ -197,7 +188,6 @@ export function PricingEditor({ data, onChange }: { data: BlockData<PricingBlock
             )}
           </div>
         </div>
-      )}
     </div>
   );
 }

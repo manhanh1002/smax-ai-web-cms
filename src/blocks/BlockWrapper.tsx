@@ -68,7 +68,7 @@ export function BlockWrapper({ children, settings, className }: BlockWrapperProp
 
   // Background classes mapping
   const bgMap = {
-    default: "bg-white",
+    default: "bg-transparent",
     muted: "bg-slate-50",
     dark: "bg-[var(--secondary)]",
     primary: "bg-[var(--primary)]",

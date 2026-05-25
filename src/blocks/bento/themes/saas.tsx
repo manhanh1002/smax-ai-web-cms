@@ -167,7 +167,11 @@ export function BentoSaaS({ data, isDark, settings }: { data: BentoBlockData; is
           </div>
         </>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className={cn(
+          "grid grid-cols-1 gap-6",
+          cards.length === 1 ? "max-w-md mx-auto grid-cols-1" :
+          cards.length === 2 ? "max-w-4xl mx-auto md:grid-cols-2" : "md:grid-cols-3"
+        )}>
           {cards.map((card, i) => (
             <BentoCardInner key={i} card={card} delay={i * 0.1} isDark={dark} executeAction={executeAction} />
           ))}

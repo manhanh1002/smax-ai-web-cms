@@ -1,6 +1,5 @@
 import { supabase } from "@/lib/supabase";
 import PageRenderer from "@/components/cms/PageRenderer";
-import { ProductTemplate } from "@/components/templates/ProductTemplate";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import StandardLayout from "@/components/layout/StandardLayout";
@@ -37,11 +36,7 @@ export default async function Home() {
 
   // Render content based on type
   const renderContent = () => {
-    if (page.type === 'product') {
-      return <ProductTemplate config={page.content_config || {}} />;
-    }
-    const blocks = page.content_config?.blocks || [];
-    return <PageRenderer blocks={blocks} />;
+    return <PageRenderer config={page.content_config || {}} />;
   };
 
   return (

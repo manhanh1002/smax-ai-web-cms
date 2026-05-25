@@ -10,7 +10,6 @@ import { MediaPicker } from "@/components/cms/MediaPicker";
 import { cn } from "@/lib/utils";
 
 export function IconGridEditor({ data, onChange }: { data: BlockData<IconGridData>; onChange: (d: BlockData<IconGridData>) => void }) {
-  const [activeTab, setActiveTab] = useState<"content" | "design">("content");
   const u = (key: string, val: any) => onChange({ ...data, [key]: val });
   
   const addItem = () => {
@@ -33,95 +32,75 @@ export function IconGridEditor({ data, onChange }: { data: BlockData<IconGridDat
 
   return (
     <div className="space-y-6">
-      <div className="flex border-b border-slate-200">
-        <button
-          onClick={() => setActiveTab("content")}
-          className={`flex items-center gap-2 px-4 py-3 text-sm font-bold border-b-2 transition-colors ${
-            activeTab === "content" ? "border-blue-600 text-blue-600" : "border-transparent text-slate-500 hover:text-slate-800"
-          }`}
-        >
-          <Type className="w-4 h-4" /> Nội dung
-        </button>
-        <button
-          onClick={() => setActiveTab("design")}
-          className={`flex items-center gap-2 px-4 py-3 text-sm font-bold border-b-2 transition-colors ${
-            activeTab === "design" ? "border-blue-600 text-blue-600" : "border-transparent text-slate-500 hover:text-slate-800"
-          }`}
-        >
-          <LayoutTemplate className="w-4 h-4" /> Thiết kế
-        </button>
+      {/* Configuration */}
+      <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-4">
+        <h4 className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Cấu hình hiển thị Items</h4>
+        
+        <Field label="Căn lề nội dung">
+          <div className="flex bg-white rounded-xl border border-slate-200 p-1">
+            {[
+              { id: 'left', icon: AlignLeft, label: 'Trái' },
+              { id: 'center', icon: AlignCenter, label: 'Giữa' },
+              { id: 'right', icon: AlignRight, label: 'Phải' }
+            ].map(item => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => u("itemAlign", item.id)}
+                className={cn(
+                  "flex-1 h-9 flex items-center justify-center rounded-lg transition-all text-xs font-bold gap-2",
+                  (data.itemAlign || "left") === item.id ? "bg-slate-900 text-white shadow-sm" : "text-slate-400 hover:bg-slate-50"
+                )}
+              >
+                <item.icon className="w-4 h-4" />
+                {item.label}
+              </button>
+            ))}
+          </div>
+        </Field>
+
+        <Field label="Kiểu hiển thị">
+          <div className="flex bg-white rounded-xl border border-slate-200 p-1">
+            {[
+              { id: 'standard', icon: LayoutTemplate, label: 'Tiêu chuẩn' },
+              { id: 'compact', icon: Box, label: 'Tối giản' }
+            ].map(item => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => u("itemStyle", item.id)}
+                className={cn(
+                  "flex-1 h-9 flex items-center justify-center rounded-lg transition-all text-xs font-bold gap-2",
+                  (data.itemStyle || "standard") === item.id ? "bg-slate-900 text-white shadow-sm" : "text-slate-400 hover:bg-slate-50"
+                )}
+              >
+                <item.icon className="w-4 h-4" />
+                {item.label}
+              </button>
+            ))}
+          </div>
+        </Field>
+
+        <Field label="Số cột hiển thị">
+          <div className="flex bg-white rounded-xl border border-slate-200 p-1">
+            {[3, 4, 5].map(col => (
+              <button
+                key={col}
+                type="button"
+                onClick={() => u("columns", col)}
+                className={cn(
+                  "flex-1 h-9 flex items-center justify-center rounded-lg transition-all text-xs font-bold gap-2",
+                  (data.columns || 4) === col ? "bg-slate-900 text-white shadow-sm" : "text-slate-400 hover:bg-slate-50"
+                )}
+              >
+                {col} Cột
+              </button>
+            ))}
+          </div>
+        </Field>
       </div>
 
-      {activeTab === "design" ? (
-        <div className="space-y-6 animate-in fade-in duration-200">
-          <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-4">
-            <h4 className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Cấu hình hiển thị Items</h4>
-            
-            <Field label="Căn lề nội dung">
-              <div className="flex bg-white rounded-xl border border-slate-200 p-1">
-                {[
-                  { id: 'left', icon: AlignLeft, label: 'Trái' },
-                  { id: 'center', icon: AlignCenter, label: 'Giữa' },
-                  { id: 'right', icon: AlignRight, label: 'Phải' }
-                ].map(item => (
-                  <button
-                    key={item.id}
-                    onClick={() => u("itemAlign", item.id)}
-                    className={cn(
-                      "flex-1 h-9 flex items-center justify-center rounded-lg transition-all text-xs font-bold gap-2",
-                      (data.itemAlign || "left") === item.id ? "bg-slate-900 text-white shadow-sm" : "text-slate-400 hover:bg-slate-50"
-                    )}
-                  >
-                    <item.icon className="w-4 h-4" />
-                    {item.label}
-                  </button>
-                ))}
-              </div>
-            </Field>
-
-            <Field label="Kiểu hiển thị">
-              <div className="flex bg-white rounded-xl border border-slate-200 p-1">
-                {[
-                  { id: 'standard', icon: LayoutTemplate, label: 'Tiêu chuẩn' },
-                  { id: 'compact', icon: Box, label: 'Tối giản' }
-                ].map(item => (
-                  <button
-                    key={item.id}
-                    onClick={() => u("itemStyle", item.id)}
-                    className={cn(
-                      "flex-1 h-9 flex items-center justify-center rounded-lg transition-all text-xs font-bold gap-2",
-                      (data.itemStyle || "standard") === item.id ? "bg-slate-900 text-white shadow-sm" : "text-slate-400 hover:bg-slate-50"
-                    )}
-                  >
-                    <item.icon className="w-4 h-4" />
-                    {item.label}
-                  </button>
-                ))}
-              </div>
-            </Field>
-
-            <Field label="Số cột hiển thị">
-              <div className="flex bg-white rounded-xl border border-slate-200 p-1">
-                {[3, 4, 5].map(col => (
-                  <button
-                    key={col}
-                    onClick={() => u("columns", col)}
-                    className={cn(
-                      "flex-1 h-9 flex items-center justify-center rounded-lg transition-all text-xs font-bold gap-2",
-                      (data.columns || 4) === col ? "bg-slate-900 text-white shadow-sm" : "text-slate-400 hover:bg-slate-50"
-                    )}
-                  >
-                    {col} Cột
-                  </button>
-                ))}
-              </div>
-            </Field>
-          </div>
-
-          <BlockSettingsEditor settings={data.settings} onChange={v => onChange({ ...data, settings: v })} />
-        </div>
-      ) : (
-        <div className="space-y-6 animate-in fade-in duration-200">
+      <div className="space-y-6 animate-in fade-in duration-200">
           <div className="grid grid-cols-2 gap-4">
             <Field label="Badge"><Inp value={data.badge || ""} onChange={v => u("badge", v)} /></Field>
             <Field label="Tiêu đề Highlight"><Inp value={data.titleHighlight || ""} onChange={v => u("titleHighlight", v)} /></Field>
@@ -172,7 +151,6 @@ export function IconGridEditor({ data, onChange }: { data: BlockData<IconGridDat
             </Button>
           </div>
         </div>
-      )}
     </div>
   );
 }

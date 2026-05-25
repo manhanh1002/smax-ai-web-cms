@@ -8,7 +8,6 @@ import { StatsBlockData } from "./definition";
 import { BlockData } from "../types";
 
 export function StatsBlockEditor({ data, onChange }: { data: BlockData<StatsBlockData>; onChange: (d: BlockData<StatsBlockData>) => void }) {
-  const [activeTab, setActiveTab] = useState<"content" | "design">("content");
   
   const addItem = () => {
     const items = [...(data.items || [])];
@@ -30,46 +29,24 @@ export function StatsBlockEditor({ data, onChange }: { data: BlockData<StatsBloc
 
   return (
     <div className="space-y-6">
-      <div className="flex border-b border-slate-200">
-        <button
-          onClick={() => setActiveTab("content")}
-          className={`flex items-center gap-2 px-4 py-3 text-sm font-bold border-b-2 transition-colors ${
-            activeTab === "content" ? "border-blue-600 text-blue-600" : "border-transparent text-slate-500 hover:text-slate-800"
-          }`}
-        >
-          <Type className="w-4 h-4" /> Nội dung
-        </button>
-        <button
-          onClick={() => setActiveTab("design")}
-          className={`flex items-center gap-2 px-4 py-3 text-sm font-bold border-b-2 transition-colors ${
-            activeTab === "design" ? "border-blue-600 text-blue-600" : "border-transparent text-slate-500 hover:text-slate-800"
-          }`}
-        >
-          <LayoutTemplate className="w-4 h-4" /> Thiết kế
-        </button>
+      {/* Configuration */}
+      <div className="p-6 bg-slate-50 border border-slate-100 rounded-2xl space-y-4">
+        <label className="text-xs font-black uppercase text-slate-400 tracking-widest">Cấu hình chung</label>
+        <Field label="Số cột hiển thị">
+          <select 
+            value={data.columns || 3} 
+            onChange={e => onChange({ ...data, columns: parseInt(e.target.value) })}
+            className="w-full h-10 px-3 rounded-xl border border-slate-200 text-sm bg-white"
+          >
+            <option value={1}>1 cột</option>
+            <option value={2}>2 cột</option>
+            <option value={3}>3 cột</option>
+            <option value={4}>4 cột</option>
+          </select>
+        </Field>
       </div>
 
-      {activeTab === "design" ? (
-        <div className="space-y-6 animate-in fade-in duration-200">
-          <div className="p-6 bg-slate-50 border border-slate-100 rounded-2xl space-y-4">
-            <label className="text-xs font-black uppercase text-slate-400 tracking-widest">Cấu hình chung</label>
-            <Field label="Số cột hiển thị">
-              <select 
-                value={data.columns || 3} 
-                onChange={e => onChange({ ...data, columns: parseInt(e.target.value) })}
-                className="w-full h-10 px-3 rounded-xl border border-slate-200 text-sm bg-white"
-              >
-                <option value={1}>1 cột</option>
-                <option value={2}>2 cột</option>
-                <option value={3}>3 cột</option>
-                <option value={4}>4 cột</option>
-              </select>
-            </Field>
-          </div>
-          <BlockSettingsEditor settings={data.settings} onChange={v => onChange({ ...data, settings: v })} />
-        </div>
-      ) : (
-        <div className="space-y-8 animate-in fade-in duration-200">
+      <div className="space-y-8 animate-in fade-in duration-200">
           <div className="grid grid-cols-1 gap-4">
             <Field label="Nhãn (Badge)"><Inp value={data.badge || ""} onChange={v => onChange({ ...data, badge: v })} placeholder="Số liệu" /></Field>
             <div className="grid grid-cols-2 gap-4">
@@ -104,7 +81,6 @@ export function StatsBlockEditor({ data, onChange }: { data: BlockData<StatsBloc
             </Button>
           </div>
         </div>
-      )}
     </div>
   );
 }

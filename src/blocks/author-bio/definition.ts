@@ -12,6 +12,7 @@ export interface AuthorBioData {
   avatar?: string;
   socials?: SocialLink[];
   layout?: "horizontal" | "vertical";
+  authorLabel?: string;
   settings?: any;
 }
 
@@ -28,6 +29,7 @@ export const AuthorBioDef: BlockDefinition<BlockData<AuthorBioData>> = {
     bio: "Mô tả ngắn về tác giả.",
     socials: [],
     layout: "horizontal",
+    authorLabel: "Về tác giả",
   },
   renderer: AuthorBioDispatcher,
   editor: AuthorBioEditor,

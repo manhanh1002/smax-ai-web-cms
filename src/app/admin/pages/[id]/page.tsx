@@ -6,13 +6,12 @@ import { Button } from "@/components/ui/Button";
 import { 
   Save, ArrowLeft, Eye, EyeOff, LayoutTemplate, FileText, Settings, X, 
   Home, AlertCircle, Layout, Columns, PanelLeft, PanelRight, Eye as EyeIcon,
-  Copy, Monitor, Tablet, Smartphone, History, RotateCcw
+  Copy, Monitor, Tablet, Smartphone, History, RotateCcw, Image as ImageIcon
 } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { ProductEditor } from "@/components/cms/ProductEditor";
 import { BlockEditor } from "@/components/cms/BlockEditor";
-import { ProductTemplate } from "@/components/templates/ProductTemplate";
 import { cn } from "@/lib/utils";
 import type { PageBlock } from "@/lib/cms/block-system/types";
 import { toast } from "sonner";
@@ -21,6 +20,7 @@ import { Label } from "@/components/ui/Label";
 import { Toggle } from "@/components/ui/Toggle";
 import { Badge } from "@/components/ui/Badge";
 import { PageHistoryModal } from "@/components/cms/PageHistoryModal";
+import { MediaPicker } from "@/components/cms/MediaPicker";
 
 export default function PageEditor() {
   const { id } = useParams() as { id: string };
@@ -48,6 +48,16 @@ export default function PageEditor() {
   const [pageCategories, setPageCategories] = useState<any[]>([]);
   const [categoryId, setCategoryId] = useState<string | null>(null);
 
+  // Page background state
+  const [pageBackground, setPageBackground] = useState<any>({
+    type: "color",
+    color: "#ffffff",
+    gradientColor1: "#ffffff",
+    gradientColor2: "#000000",
+    gradientAngle: 180,
+    imageUrl: ""
+  });
+
   // Template state
   const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
   const [templateName, setTemplateName] = useState("");
@@ -64,8 +74,8 @@ export default function PageEditor() {
 
   // Preview config for the live preview panel
   const previewConfig = pageType === "custom"
-    ? { blocks }
-    : productConfig;
+    ? { blocks, pageBackground }
+    : { ...productConfig, pageBackground };
 
   const lastSavedRef = useRef<string>("");
 
@@ -105,11 +115,20 @@ export default function PageEditor() {
         const initialBlocks = config.blocks || data.blocks || [];
         const initialProductConfig = config || {};
         const type = data.type || "custom";
+        const initialBg = config.pageBackground || {
+          type: "color",
+          color: "#ffffff",
+          gradientColor1: "#ffffff",
+          gradientColor2: "#000000",
+          gradientAngle: 180,
+          imageUrl: ""
+        };
 
         setPage(data);
         setProductConfig(initialProductConfig);
         setBlocks(initialBlocks);
         setPageType(type);
+        setPageBackground(initialBg);
         
         setTitle(data.title || "");
         setSlug(data.slug || "");
@@ -137,7 +156,8 @@ export default function PageEditor() {
           sidebarRightId: data.sidebar_right_id,
           blocks: initialBlocks, 
           productConfig: initialProductConfig, 
-          pageType: type
+          pageType: type,
+          pageBackground: initialBg
         });
         lastSavedRef.current = currentData;
       }
@@ -159,8 +179,8 @@ export default function PageEditor() {
     }
 
     const configToSave = pageType === "custom"
-      ? { ...productConfig, blocks }
-      : productConfig;
+      ? { ...productConfig, blocks, pageBackground }
+      : { ...productConfig, pageBackground };
 
     const { error } = await supabase.from("pages").update({
       title,
@@ -214,7 +234,7 @@ export default function PageEditor() {
       lastSavedRef.current = JSON.stringify({
         title, slug, isHome, is404, status, layoutType, 
         hideHeader, hideFooter, sidebarLeftId, sidebarRightId,
-        blocks, productConfig, pageType
+        blocks, productConfig, pageType, pageBackground
       });
 
       setPage({ 
@@ -243,7 +263,8 @@ export default function PageEditor() {
         categoryId,
         blocks,
         productConfig,
-        pageType
+        pageType,
+        pageBackground
       });
     }
 
@@ -261,6 +282,7 @@ export default function PageEditor() {
     setBlocks(version.blocks || []);
     setProductConfig(version.content_config || {});
     setPageType(version.type || "custom");
+    setPageBackground(version.content_config?.pageBackground || { type: "color", color: "#ffffff" });
 
     setIsHistoryOpen(false);
     toast.success("Đang xem trước phiên bản ngày " + new Date(version.created_at).toLocaleString("vi-VN"));
@@ -281,6 +303,7 @@ export default function PageEditor() {
     setBlocks(backupState.blocks);
     setProductConfig(backupState.productConfig);
     setPageType(backupState.pageType);
+    setPageBackground(backupState.pageBackground);
 
     setPreviewedVersion(null);
     setBackupState(null);
@@ -331,6 +354,7 @@ export default function PageEditor() {
       setBlocks(version.blocks || []);
       setProductConfig(version.content_config || {});
       setPageType(version.type);
+      setPageBackground(version.content_config?.pageBackground || { type: "color", color: "#ffffff" });
 
       // Save history version recording the restoration
       try {
@@ -376,7 +400,7 @@ export default function PageEditor() {
       const currentData = JSON.stringify({
         title, slug, isHome, is404, status, layoutType, 
         hideHeader, hideFooter, sidebarLeftId, sidebarRightId,
-        blocks, productConfig, pageType
+        blocks, productConfig, pageType, pageBackground
       });
 
       if (currentData !== lastSavedRef.current) {
@@ -386,7 +410,7 @@ export default function PageEditor() {
     }, 10000);
 
     return () => clearInterval(interval);
-  }, [title, slug, isHome, is404, status, layoutType, hideHeader, hideFooter, sidebarLeftId, sidebarRightId, blocks, productConfig, pageType, saving, page, previewedVersion]);
+  }, [title, slug, isHome, is404, status, layoutType, hideHeader, hideFooter, sidebarLeftId, sidebarRightId, blocks, productConfig, pageType, pageBackground, saving, page, previewedVersion]);
 
   // Resizing logic
   useEffect(() => {
@@ -429,8 +453,8 @@ export default function PageEditor() {
 
     setSavingTemplate(true);
     const configToSave = pageType === "custom"
-      ? { ...productConfig, blocks }
-      : productConfig;
+      ? { ...productConfig, blocks, pageBackground }
+      : { ...productConfig, pageBackground };
 
     const { error } = await supabase.from("page_templates").insert({
       name: templateName,
@@ -856,6 +880,150 @@ export default function PageEditor() {
                       <Toggle checked={hideFooter} onChange={setHideFooter} />
                     </div>
                   </div>
+                </div>
+
+                <div className="space-y-4 pt-4 border-t border-slate-100">
+                  <Label className="text-xs font-bold uppercase tracking-wider text-slate-500">Nền trang (Page Background)</Label>
+                  <div className="flex bg-slate-100 p-1 rounded-2xl">
+                    <button
+                      type="button"
+                      onClick={() => setPageBackground((prev: any) => ({ ...prev, type: "color" }))}
+                      className={cn(
+                        "flex-1 py-2 text-[10px] font-bold uppercase tracking-wider rounded-xl transition-all",
+                        pageBackground.type === "color" ? "bg-white shadow text-slate-900" : "text-slate-500 hover:text-slate-700"
+                      )}
+                    >
+                      Màu sắc
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setPageBackground((prev: any) => ({ ...prev, type: "gradient" }))}
+                      className={cn(
+                        "flex-1 py-2 text-[10px] font-bold uppercase tracking-wider rounded-xl transition-all",
+                        pageBackground.type === "gradient" ? "bg-white shadow text-slate-900" : "text-slate-500 hover:text-slate-700"
+                      )}
+                    >
+                      Gradient
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setPageBackground((prev: any) => ({ ...prev, type: "image" }))}
+                      className={cn(
+                        "flex-1 py-2 text-[10px] font-bold uppercase tracking-wider rounded-xl transition-all",
+                        pageBackground.type === "image" ? "bg-white shadow text-slate-900" : "text-slate-500 hover:text-slate-700"
+                      )}
+                    >
+                      Hình ảnh
+                    </button>
+                  </div>
+
+                  {pageBackground.type === "color" && (
+                    <div className="space-y-2">
+                      <Label className="text-[10px] font-bold text-slate-400">Chọn màu nền</Label>
+                      <div className="flex gap-2 items-center">
+                        <input
+                          type="color"
+                          value={pageBackground.color || "#ffffff"}
+                          onChange={(e) => setPageBackground((prev: any) => ({ ...prev, color: e.target.value }))}
+                          className="w-12 h-11 rounded-xl border border-slate-200 cursor-pointer p-1 bg-white shrink-0"
+                        />
+                        <Input
+                          value={pageBackground.color || "#ffffff"}
+                          onChange={(e) => setPageBackground((prev: any) => ({ ...prev, color: e.target.value }))}
+                          placeholder="#ffffff"
+                          className="rounded-xl h-11"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {pageBackground.type === "gradient" && (
+                    <div className="space-y-4">
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label className="text-[10px] font-bold text-slate-400">Màu bắt đầu</Label>
+                          <div className="flex gap-2 items-center">
+                            <input
+                              type="color"
+                              value={pageBackground.gradientColor1 || "#ffffff"}
+                              onChange={(e) => setPageBackground((prev: any) => ({ ...prev, gradientColor1: e.target.value }))}
+                              className="w-10 h-10 rounded-xl border border-slate-200 cursor-pointer p-1 bg-white shrink-0"
+                            />
+                            <Input
+                              value={pageBackground.gradientColor1 || "#ffffff"}
+                              onChange={(e) => setPageBackground((prev: any) => ({ ...prev, gradientColor1: e.target.value }))}
+                              placeholder="#ffffff"
+                              className="rounded-xl h-10 text-xs"
+                            />
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="text-[10px] font-bold text-slate-400">Màu kết thúc</Label>
+                          <div className="flex gap-2 items-center">
+                            <input
+                              type="color"
+                              value={pageBackground.gradientColor2 || "#000000"}
+                              onChange={(e) => setPageBackground((prev: any) => ({ ...prev, gradientColor2: e.target.value }))}
+                              className="w-10 h-10 rounded-xl border border-slate-200 cursor-pointer p-1 bg-white shrink-0"
+                            />
+                            <Input
+                              value={pageBackground.gradientColor2 || "#000000"}
+                              onChange={(e) => setPageBackground((prev: any) => ({ ...prev, gradientColor2: e.target.value }))}
+                              placeholder="#000000"
+                              className="rounded-xl h-10 text-xs"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="flex justify-between items-center text-[10px] font-bold text-slate-400">
+                          <span>Góc xoay (Angle)</span>
+                          <span>{pageBackground.gradientAngle ?? 180}°</span>
+                        </div>
+                        <input
+                          type="range"
+                          min="0"
+                          max="360"
+                          value={pageBackground.gradientAngle ?? 180}
+                          onChange={(e) => setPageBackground((prev: any) => ({ ...prev, gradientAngle: parseInt(e.target.value) }))}
+                          className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-primary"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {pageBackground.type === "image" && (
+                    <div className="space-y-3">
+                      <Label className="text-[10px] font-bold text-slate-400">Hình nền trang</Label>
+                      <div className="flex gap-2">
+                        <Input
+                          value={pageBackground.imageUrl || ""}
+                          onChange={(e) => setPageBackground((prev: any) => ({ ...prev, imageUrl: e.target.value }))}
+                          placeholder="https://example.com/image.png"
+                          className="rounded-xl h-11"
+                        />
+                        <MediaPicker
+                          onSelect={(url) => setPageBackground((prev: any) => ({ ...prev, imageUrl: url }))}
+                        />
+                      </div>
+                      {pageBackground.imageUrl && (
+                        <div className="relative aspect-video rounded-2xl border border-slate-100 overflow-hidden bg-slate-50 mt-2">
+                          <img
+                            src={pageBackground.imageUrl}
+                            alt="Background Preview"
+                            className="w-full h-full object-cover"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setPageBackground((prev: any) => ({ ...prev, imageUrl: "" }))}
+                            className="absolute top-2 right-2 p-1.5 bg-black/50 hover:bg-black/70 text-white rounded-full transition-colors"
+                          >
+                            <X className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

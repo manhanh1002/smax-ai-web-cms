@@ -8,7 +8,10 @@ const fileColors: Record<string,string> = { pdf:"bg-red-50 text-red-600", doc:"b
 
 export function DownloadCardsSaaS({ data, isDark }: { data: DownloadCardsData; isDark?: boolean }) {
   const { executeAction } = useActionExecutor();
-  const gridCols = data.columns===2 ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3";
+  const cardCount = (data.resources??[]).length;
+  const gridCols = data.columns===2
+    ? (cardCount === 1 ? "grid-cols-1 max-w-md mx-auto" : "grid-cols-1 md:grid-cols-2")
+    : (cardCount === 1 ? "grid-cols-1 max-w-md mx-auto" : cardCount === 2 ? "grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto" : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3");
   return (
     <div className="max-w-6xl mx-auto">
       {(data.sectionLabel||data.title) && (

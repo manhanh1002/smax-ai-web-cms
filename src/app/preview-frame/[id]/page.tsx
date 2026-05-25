@@ -2,7 +2,7 @@
 
 import { useEffect, useState, use } from "react";
 import { supabase } from "@/lib/supabase";
-import { ProductTemplate } from "@/components/templates/ProductTemplate";
+import PageRenderer from "@/components/cms/PageRenderer";
 
 export default function PagePreview({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -39,7 +39,8 @@ export default function PagePreview({ params }: { params: Promise<{ id: string }
         page_type: data.type || "custom",
         product_config: data.content_config || {},
         blocks: data.content_config?.blocks || data.blocks || [],
-        settings: data.settings || {}
+        settings: data.settings || {},
+        pageBackground: data.content_config?.pageBackground
       });
     }
   }
@@ -47,8 +48,6 @@ export default function PagePreview({ params }: { params: Promise<{ id: string }
   if (!previewConfig) return null;
 
   return (
-    <div className="min-h-screen bg-white">
-      <ProductTemplate config={previewConfig} />
-    </div>
+    <PageRenderer config={previewConfig} />
   );
 }

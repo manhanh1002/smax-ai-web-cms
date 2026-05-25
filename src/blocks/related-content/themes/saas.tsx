@@ -8,7 +8,10 @@ const typeColors: Record<string,string> = { blog:"bg-blue-100 text-blue-700","ca
 
 export function RelatedContentSaaS({ data, isDark }: { data: RelatedContentData; isDark?: boolean }) {
   const { executeAction } = useActionExecutor();
-  const gridCols = data.columns===2 ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3";
+  const itemCount = (data.items??[]).length;
+  const gridCols = data.columns===2
+    ? (itemCount === 1 ? "grid-cols-1 max-w-md mx-auto" : "grid-cols-1 md:grid-cols-2")
+    : (itemCount === 1 ? "grid-cols-1 max-w-md mx-auto" : itemCount === 2 ? "grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto" : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3");
   return (
     <div className="max-w-6xl mx-auto">
       {data.title && <h2 className={cn("text-3xl md:text-4xl mb-10 text-center font-bold", isDark?"text-white":"text-[var(--secondary)]")}>{data.title}</h2>}

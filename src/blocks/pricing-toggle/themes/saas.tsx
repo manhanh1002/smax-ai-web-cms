@@ -14,17 +14,21 @@ export function PricingToggleSaaS({ data, isDark }: { data: PricingToggleData; i
         <h2 className={cn("text-3xl md:text-4xl", isDark?"text-white":"text-[var(--secondary)]")}>{data.title}</h2>
         {data.subtitle && <p className={cn("text-lg max-w-2xl mx-auto", isDark?"text-white/60":"text-[var(--secondary)]/60")}>{data.subtitle}</p>}
         <div className="flex items-center justify-center gap-3 pt-2">
-          <span className={cn("text-sm font-medium", !isAnnual?(isDark?"text-white":"text-[var(--secondary)]"):(isDark?"text-slate-500":"text-slate-400"))}>Tháng</span>
+          <span className={cn("text-sm font-medium", !isAnnual?(isDark?"text-white":"text-[var(--secondary)]"):(isDark?"text-slate-500":"text-slate-400"))}>{data.monthlyLabel || "Tháng"}</span>
           <button onClick={() => setIsAnnual(!isAnnual)} className={cn("relative w-12 h-6 rounded-full transition-colors", isAnnual?"bg-[var(--primary)]":(isDark?"bg-slate-600":"bg-slate-300"))}>
             <span className={cn("absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-200", isAnnual?"left-6":"left-0.5")} />
           </button>
           <span className={cn("text-sm font-medium flex items-center gap-2", isAnnual?(isDark?"text-white":"text-[var(--secondary)]"):(isDark?"text-slate-500":"text-slate-400"))}>
-            Năm
+            {data.yearlyLabel || "Năm"}
             {data.savingsBadge && isAnnual && <span className="bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-0.5 rounded-full">{data.savingsBadge}</span>}
           </span>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
+      <div className={cn(
+        "grid grid-cols-1 gap-6 items-start",
+        (data.plans??[]).length === 1 ? "max-w-md mx-auto grid-cols-1" :
+        (data.plans??[]).length === 2 ? "max-w-4xl mx-auto md:grid-cols-2" : "md:grid-cols-2 lg:grid-cols-3"
+      )}>
         {(data.plans??[]).map((plan, i) => {
           const price = isAnnual ? plan.annualPrice : plan.monthlyPrice;
           return (
@@ -36,7 +40,7 @@ export function PricingToggleSaaS({ data, isDark }: { data: PricingToggleData; i
               </div>
               <div className="flex items-baseline gap-1">
                 <span className={cn("text-4xl font-bold", plan.popular?"text-white":(isDark?"text-white":"text-[var(--secondary)]"))}>{plan.currency}{price.toLocaleString()}</span>
-                <span className={cn("text-sm", plan.popular?"text-white/70":(isDark?"text-slate-400":"text-slate-500"))}>/{isAnnual?"năm":"tháng"}</span>
+                <span className={cn("text-sm", plan.popular?"text-white/70":(isDark?"text-slate-400":"text-slate-500"))}>/{isAnnual ? (data.yearlyLabel || "Năm").toLowerCase() : (data.monthlyLabel || "Tháng").toLowerCase()}</span>
               </div>
               <ul className="space-y-2.5">
                 {plan.features.map((f, j) => (

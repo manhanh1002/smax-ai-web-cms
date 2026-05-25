@@ -99,7 +99,11 @@ export function TestimonialsSaaS({ data, isDark, settings }: { data: Testimonial
   const renderContent = () => {
     if (displayMode === "grid") {
       return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className={cn(
+          "grid grid-cols-1 gap-8",
+          (data.items??[]).length === 1 ? "max-w-md mx-auto grid-cols-1" :
+          (data.items??[]).length === 2 ? "max-w-4xl mx-auto md:grid-cols-2" : "md:grid-cols-2 lg:grid-cols-3"
+        )}>
           {data.items?.map((item, i) => (
             <TestimonialCard key={i} item={item} i={i} />
           ))}

@@ -3,7 +3,18 @@ import { JobListingsDispatcher } from "./index";
 import { JobListingsEditor } from "./editor";
 
 export interface JobListing { title: string; department: string; location: string; type: "full-time"|"part-time"|"contract"|"remote"; applyAction?: any; salary?: string; description?: string; }
-export interface JobListingsData { sectionLabel?: string; title: string; subtitle?: string; jobs: JobListing[]; departments: string[]; showFilter?: boolean; settings?: any; }
+export interface JobListingsData {
+  sectionLabel?: string;
+  title: string;
+  subtitle?: string;
+  jobs: JobListing[];
+  departments: string[];
+  showFilter?: boolean;
+  applyBtnText?: string;
+  allFilterLabel?: string;
+  emptyStateText?: string;
+  settings?: any;
+}
 
 export const JobListingsDef: BlockDefinition<BlockData<JobListingsData>> = {
   type: "jobListings",
@@ -16,7 +27,10 @@ export const JobListingsDef: BlockDefinition<BlockData<JobListingsData>> = {
     title: "Tuyển dụng",
     jobs: [],
     departments: [],
-    showFilter: true
+    showFilter: true,
+    applyBtnText: "Chi tiết →",
+    allFilterLabel: "Tất cả",
+    emptyStateText: "Không có vị trí nào",
   },
   renderer: JobListingsDispatcher,
   editor: JobListingsEditor,

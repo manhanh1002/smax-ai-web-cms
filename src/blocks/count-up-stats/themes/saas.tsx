@@ -32,7 +32,12 @@ import { SectionTitle } from "../../SectionTitle";
 
 export function CountUpStatsSaaS({ data, isDark }: { data: CountUpStatsData; isDark?: boolean }) {
   const cols = data.columns ?? 3;
-  const gridCols: Record<number,string> = { 2:"grid-cols-2", 3:"grid-cols-1 md:grid-cols-3", 4:"grid-cols-2 md:grid-cols-4" };
+  const statCount = (data.stats??[]).length;
+  const gridCols: Record<number,string> = {
+    2: statCount === 1 ? "grid-cols-1 max-w-md mx-auto" : "grid-cols-2",
+    3: statCount === 1 ? "grid-cols-1 max-w-md mx-auto" : statCount === 2 ? "grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto" : "grid-cols-1 md:grid-cols-3",
+    4: statCount === 1 ? "grid-cols-1 max-w-md mx-auto" : statCount === 2 ? "grid-cols-2 max-w-4xl mx-auto" : statCount === 3 ? "grid-cols-2 md:grid-cols-3 max-w-5xl mx-auto" : "grid-cols-2 md:grid-cols-4"
+  };
   const isCards = data.layout === "cards";
   return (
     <div className="max-w-6xl mx-auto">

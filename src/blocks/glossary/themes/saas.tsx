@@ -21,7 +21,7 @@ export function GlossarySaaS({ data, isDark }: { data: GlossaryData; isDark?: bo
       {(data.showSearch || data.showFilter) && (
         <div className="space-y-4 mb-8">
           {data.showSearch && (
-            <input type="text" placeholder="Tìm kiếm..." value={search} onChange={e => setSearch(e.target.value)}
+            <input type="text" placeholder={data.searchPlaceholder || "Tìm kiếm..."} value={search} onChange={e => setSearch(e.target.value)}
               className={cn("w-full px-4 py-3 border transition-all focus:ring-2 focus:ring-[var(--primary)]/20 focus:border-[var(--primary)]", isDark?"bg-white/5 border-white/10 text-white placeholder-white/30":"bg-white border-slate-200 text-[var(--secondary)] placeholder-slate-400")} style={{ borderRadius: "var(--radius-md)" }} />
           )}
           {data.showFilter && categories.length > 0 && (

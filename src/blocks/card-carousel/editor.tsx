@@ -9,7 +9,6 @@ import { CardCarouselBlockData } from "./definition";
 import { BlockData } from "../types";
 
 export function CardCarouselEditor({ data, onChange }: { data: BlockData<CardCarouselBlockData>; onChange: (d: BlockData<CardCarouselBlockData>) => void }) {
-  const [activeTab, setActiveTab] = useState<"content" | "design">("content");
   const u = (key: string, val: any) => onChange({ ...data, [key]: val });
 
   const addCard = () => {
@@ -32,63 +31,55 @@ export function CardCarouselEditor({ data, onChange }: { data: BlockData<CardCar
 
   return (
     <div className="space-y-6">
-      <div className="flex border-b border-slate-200">
-        <button onClick={() => setActiveTab("content")} className={`flex items-center gap-2 px-4 py-3 text-sm font-bold border-b-2 transition-colors ${activeTab === "content" ? "border-blue-600 text-blue-600" : "border-transparent text-slate-500 hover:text-slate-800"}`}><Type className="w-4 h-4" /> Nội dung</button>
-        <button onClick={() => setActiveTab("design")} className={`flex items-center gap-2 px-4 py-3 text-sm font-bold border-b-2 transition-colors ${activeTab === "design" ? "border-blue-600 text-blue-600" : "border-transparent text-slate-500 hover:text-slate-800"}`}><LayoutTemplate className="w-4 h-4" /> Thiết kế</button>
+      {/* Slider Configuration */}
+      <div className="p-4 bg-slate-50 rounded-2xl space-y-4">
+        <h4 className="text-xs font-black uppercase text-slate-400 tracking-widest">Cấu hình Slider</h4>
+        <div className="grid grid-cols-2 gap-4">
+          <Field label="Tự động chạy">
+            <select
+              className="w-full h-10 px-3 bg-white border border-slate-200 rounded-xl text-sm"
+              value={data.autoplay ? "true" : "false"}
+              onChange={e => u("autoplay", e.target.value === "true")}
+            >
+              <option value="true">Bật</option>
+              <option value="false">Tắt</option>
+            </select>
+          </Field>
+          <Field label="Tốc độ (ms)"><Inp type="number" value={data.autoplayInterval || 5000} onChange={v => u("autoplayInterval", parseInt(v))} /></Field>
+          <Field label="Hiển thị mũi tên">
+            <select
+              className="w-full h-10 px-3 bg-white border border-slate-200 rounded-xl text-sm"
+              value={data.showArrows !== false ? "true" : "false"}
+              onChange={e => u("showArrows", e.target.value === "true")}
+            >
+              <option value="true">Hiện</option>
+              <option value="false">Ẩn</option>
+            </select>
+          </Field>
+          <Field label="Hiển thị thanh trượt">
+            <select
+              className="w-full h-10 px-3 bg-white border border-slate-200 rounded-xl text-sm"
+              value={data.showPagination !== false ? "true" : "false"}
+              onChange={e => u("showPagination", e.target.value === "true")}
+            >
+              <option value="true">Hiện</option>
+              <option value="false">Ẩn</option>
+            </select>
+          </Field>
+          <Field label="Hiển thị ảnh">
+            <select
+              className="w-full h-10 px-3 bg-white border border-slate-200 rounded-xl text-sm"
+              value={data.imageFit || "cover"}
+              onChange={e => u("imageFit", e.target.value)}
+            >
+              <option value="cover">Cover (Đầy khung)</option>
+              <option value="contain">Contain (Giữ nguyên tỉ lệ)</option>
+            </select>
+          </Field>
+        </div>
       </div>
 
-      {activeTab === "design" ? (
-        <div className="space-y-6 animate-in fade-in duration-200">
-          <div className="p-4 bg-slate-50 rounded-2xl space-y-4">
-            <h4 className="text-xs font-black uppercase text-slate-400 tracking-widest">Cấu hình Slider</h4>
-            <div className="grid grid-cols-2 gap-4">
-              <Field label="Tự động chạy">
-                <select
-                  className="w-full h-10 px-3 bg-white border border-slate-200 rounded-xl text-sm"
-                  value={data.autoplay ? "true" : "false"}
-                  onChange={e => u("autoplay", e.target.value === "true")}
-                >
-                  <option value="true">Bật</option>
-                  <option value="false">Tắt</option>
-                </select>
-              </Field>
-              <Field label="Tốc độ (ms)"><Inp type="number" value={data.autoplayInterval || 5000} onChange={v => u("autoplayInterval", parseInt(v))} /></Field>
-              <Field label="Hiển thị mũi tên">
-                <select
-                  className="w-full h-10 px-3 bg-white border border-slate-200 rounded-xl text-sm"
-                  value={data.showArrows !== false ? "true" : "false"}
-                  onChange={e => u("showArrows", e.target.value === "true")}
-                >
-                  <option value="true">Hiện</option>
-                  <option value="false">Ẩn</option>
-                </select>
-              </Field>
-              <Field label="Hiển thị thanh trượt">
-                <select
-                  className="w-full h-10 px-3 bg-white border border-slate-200 rounded-xl text-sm"
-                  value={data.showPagination !== false ? "true" : "false"}
-                  onChange={e => u("showPagination", e.target.value === "true")}
-                >
-                  <option value="true">Hiện</option>
-                  <option value="false">Ẩn</option>
-                </select>
-              </Field>
-              <Field label="Hiển thị ảnh">
-                <select
-                  className="w-full h-10 px-3 bg-white border border-slate-200 rounded-xl text-sm"
-                  value={data.imageFit || "cover"}
-                  onChange={e => u("imageFit", e.target.value)}
-                >
-                  <option value="cover">Cover (Đầy khung)</option>
-                  <option value="contain">Contain (Giữ nguyên tỉ lệ)</option>
-                </select>
-              </Field>
-            </div>
-          </div>
-          <BlockSettingsEditor settings={data.settings} onChange={v => onChange({ ...data, settings: v })} />
-        </div>
-      ) : (
-        <div className="space-y-6 animate-in fade-in duration-200">
+      <div className="space-y-6 animate-in fade-in duration-200">
           <div className="grid grid-cols-2 gap-4">
             <Field label="Badge"><Inp value={data.badge || ""} onChange={v => u("badge", v)} /></Field>
             <div className="col-span-2"><Field label="Tiêu đề chính"><Inp value={data.title || ""} onChange={v => u("title", v)} /></Field></div>
@@ -127,7 +118,6 @@ export function CardCarouselEditor({ data, onChange }: { data: BlockData<CardCar
             <Button variant="outline" className="w-full border-dashed" onClick={addCard}><Plus className="w-4 h-4 mr-2" /> Thêm Card mới</Button>
           </div>
         </div>
-      )}
     </div>
   );
 }

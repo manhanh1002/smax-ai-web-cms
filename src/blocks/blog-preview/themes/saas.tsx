@@ -50,7 +50,11 @@ export function BlogPreviewSaaS({ data, isDark, settings }: { data: BlogPreviewB
         )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className={cn(
+        "grid grid-cols-1 gap-8",
+        posts.length === 1 ? "max-w-md mx-auto grid-cols-1" :
+        posts.length === 2 ? "max-w-4xl mx-auto md:grid-cols-2" : "md:grid-cols-2 lg:grid-cols-3"
+      )}>
         {posts.map((post, i) => (
           <motion.a
             key={post.id}

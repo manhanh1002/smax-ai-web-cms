@@ -23,7 +23,7 @@ export function JobListingsSaaS({ data, isDark }: { data: JobListingsData; isDar
       {data.showFilter && (data.departments??[]).length > 0 && (
         <div className="flex flex-wrap gap-2 mb-8">
           <button onClick={() => setFilterDept(null)} className={cn("px-4 py-2 rounded-[var(--radius)] text-sm font-bold transition-all", !filterDept?"bg-[var(--primary)] text-white":(isDark?"bg-white/10 text-white/80":"bg-slate-100 text-slate-700"))}>
-            Tất cả ({data.jobs?.length??0})
+            {data.allFilterLabel || "Tất cả"} ({data.jobs?.length??0})
           </button>
           {(data.departments??[]).map(dept => (
             <button key={dept} onClick={() => setFilterDept(dept)} className={cn("px-4 py-2 rounded-[var(--radius)] text-sm font-bold transition-all", filterDept===dept?"bg-[var(--primary)] text-white":(isDark?"bg-white/10 text-white/80":"bg-slate-100 text-slate-700"))}>
@@ -34,7 +34,7 @@ export function JobListingsSaaS({ data, isDark }: { data: JobListingsData; isDar
       )}
       <div className="space-y-4">
         {filtered.length === 0
-          ? <div className={cn("text-center py-12", isDark?"text-white/40":"text-slate-500")}>Không có vị trí nào</div>
+          ? <div className={cn("text-center py-12", isDark?"text-white/40":"text-slate-500")}>{data.emptyStateText || "Không có vị trí nào"}</div>
           : filtered.map((job, i) => (
             <button key={i} onClick={() => executeAction(job.applyAction)} className={cn("w-full text-left block p-6 border transition-all hover:border-[var(--primary)]/50 hover:shadow-[var(--shadow-md)]", isDark?"bg-white/5 border-white/10":"bg-white border-slate-200 shadow-sm")} style={{ borderRadius: "var(--radius-md)" }}>
               <div className="flex items-start justify-between gap-4">
@@ -48,7 +48,7 @@ export function JobListingsSaaS({ data, isDark }: { data: JobListingsData; isDar
                     {job.salary && <span className={cn("font-bold", isDark?"text-[var(--primary)]":"text-[var(--primary)]")}>{job.salary}</span>}
                   </div>
                 </div>
-                <span className={cn("px-4 py-2 rounded-[var(--radius)] text-xs font-bold uppercase tracking-wider whitespace-nowrap flex-shrink-0", isDark?"bg-white/10 text-white/80":"bg-slate-100 text-slate-700")}>Chi tiết →</span>
+                <span className={cn("px-4 py-2 rounded-[var(--radius)] text-xs font-bold uppercase tracking-wider whitespace-nowrap flex-shrink-0", isDark?"bg-white/10 text-white/80":"bg-slate-100 text-slate-700")}>{data.applyBtnText || "Chi tiết →"}</span>
               </div>
             </button>
           ))

@@ -5,7 +5,10 @@ import type { TeamGridData } from "../definition";
 import { SectionTitle } from "../../SectionTitle";
 
 export function TeamGridSaaS({ data, isDark }: { data: TeamGridData; isDark?: boolean }) {
-  const gridCols = data.columns === 4 ? "grid-cols-2 md:grid-cols-4" : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3";
+  const memberCount = (data.members??[]).length;
+  const gridCols = data.columns === 4
+    ? (memberCount === 1 ? "grid-cols-1 max-w-sm mx-auto" : memberCount === 2 ? "grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto" : memberCount === 3 ? "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 max-w-4xl mx-auto" : "grid-cols-2 md:grid-cols-4")
+    : (memberCount === 1 ? "grid-cols-1 max-w-sm mx-auto" : memberCount === 2 ? "grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto" : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3");
   return (
     <div className="max-w-6xl mx-auto">
       <SectionTitle

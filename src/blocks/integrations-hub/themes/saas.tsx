@@ -23,7 +23,7 @@ export function IntegrationsHubSaaS({ data, isDark }: { data: IntegrationsHubDat
       <h2 className={cn("text-3xl md:text-4xl mb-8 text-center", isDark?"text-white":"text-[var(--secondary)]")}>{data.title}</h2>
       <div className="space-y-6 mb-10">
         {data.showSearch && (
-          <input type="text" placeholder="Tìm kiếm tích hợp..." value={search} onChange={e => setSearch(e.target.value)}
+          <input type="text" placeholder={data.searchPlaceholder || "Tìm kiếm tích hợp..."} value={search} onChange={e => setSearch(e.target.value)}
             className={cn("w-full max-w-md mx-auto block px-4 py-3 border transition-all focus:ring-2 focus:ring-[var(--primary)]/20 focus:border-[var(--primary)]", isDark?"bg-white/5 border-white/10 text-white placeholder-white/30":"bg-white border-slate-200 text-[var(--secondary)] placeholder-slate-400")} style={{ borderRadius: "var(--radius-md)" }} />
         )}
         {(data.categories??[]).length > 0 && (
@@ -42,8 +42,14 @@ export function IntegrationsHubSaaS({ data, isDark }: { data: IntegrationsHubDat
 
       {featured.length > 0 && (
         <div className="mb-10">
-          <p className={cn("text-xs font-bold uppercase tracking-widest mb-6 text-[var(--primary)]")}>Nổi bật</p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <p className={cn("text-xs font-bold uppercase tracking-widest mb-6 text-[var(--primary)]")}>{data.featuredLabel || "Nổi bật"}</p>
+          <div className={cn(
+            "grid gap-4",
+            featured.length === 1 ? "grid-cols-1 max-w-sm mx-auto" :
+            featured.length === 2 ? "grid-cols-2 max-w-2xl mx-auto" :
+            featured.length === 3 ? "grid-cols-2 md:grid-cols-3 max-w-4xl mx-auto" :
+            "grid-cols-2 md:grid-cols-4"
+          )}>
             {featured.map((item, i) => (
               <button key={i} onClick={() => executeAction(item.action)}
                 className={cn("p-5 border text-left transition-all hover:border-[var(--primary)]/50 hover:-translate-y-1 hover:shadow-[var(--shadow-md)]", isDark?"bg-white/5 border-white/10":"bg-white border-slate-200 shadow-sm")} style={{ borderRadius: "var(--radius-md)" }}>
@@ -57,7 +63,14 @@ export function IntegrationsHubSaaS({ data, isDark }: { data: IntegrationsHubDat
       )}
 
       {regular.length > 0 && (
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <div className={cn(
+          "grid gap-4",
+          regular.length === 1 ? "grid-cols-1 max-w-xs mx-auto" :
+          regular.length === 2 ? "grid-cols-2 max-w-md mx-auto" :
+          regular.length === 3 ? "grid-cols-2 md:grid-cols-3 max-w-2xl mx-auto" :
+          regular.length === 4 ? "grid-cols-2 md:grid-cols-4 max-w-4xl mx-auto" :
+          "grid-cols-2 md:grid-cols-4 lg:grid-cols-5"
+        )}>
           {regular.map((item, i) => (
             <button key={i} onClick={() => executeAction(item.action)}
               className={cn("p-4 border flex flex-col items-center text-center transition-all hover:border-[var(--primary)]/50 hover:shadow-[var(--shadow-sm)]", isDark?"bg-white/5 border-white/10":"bg-white border-slate-200")} style={{ borderRadius: "var(--radius-md)" }}>

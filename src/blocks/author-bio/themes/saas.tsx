@@ -16,7 +16,7 @@ export function AuthorBioSaaS({ data, isDark }: { data: AuthorBioData; isDark?: 
             : <div className={cn("w-20 h-20 flex-shrink-0 flex items-center justify-center text-2xl font-bold", isDark ? "bg-[var(--primary)] text-white" : "bg-[var(--primary)]/10 text-[var(--primary)]")} style={{ borderRadius: "var(--radius-md)" }}>{data.name.charAt(0)}</div>
           }
           <div className="flex-1">
-            <p className={cn("text-xs font-bold uppercase tracking-widest mb-1 text-[var(--primary)]")}>Về tác giả</p>
+            <p className={cn("text-xs font-bold uppercase tracking-widest mb-1 text-[var(--primary)]")}>{data.authorLabel || "Về tác giả"}</p>
             <h3 className={cn("text-xl mb-0.5", isDark ? "text-white" : "text-[var(--secondary)]")}>{data.name}</h3>
             {(data.title || data.company) && (
               <p className={cn("text-sm mb-3", isDark ? "text-white/60" : "text-[var(--secondary)]/60")}>{[data.title, data.company].filter(Boolean).join(" tại ")}</p>

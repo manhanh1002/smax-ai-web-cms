@@ -20,10 +20,10 @@ export function ContactFormSaaS({ data, isDark }: { data: ContactFormData; isDar
       <div className={cn("flex gap-12", isSplit?"flex-col lg:flex-row":"flex-col")}>
         {data.contactInfo && isSplit && (
           <div className="lg:w-1/3 space-y-6">
-            {data.contactInfo.address && <div><p className={cn("font-bold mb-1", isDark?"text-white":"text-[var(--secondary)]")}>📍 Địa chỉ</p><p className={isDark?"text-white/60":"text-[var(--secondary)]/60"}>{data.contactInfo.address}</p></div>}
-            {data.contactInfo.phone && <div><p className={cn("font-bold mb-1", isDark?"text-white":"text-[var(--secondary)]")}>☎️ SĐT</p><a href={`tel:${data.contactInfo.phone}`} className={cn("font-bold text-[var(--primary)]")}>{data.contactInfo.phone}</a></div>}
-            {data.contactInfo.email && <div><p className={cn("font-bold mb-1", isDark?"text-white":"text-[var(--secondary)]")}>✉️ Email</p><a href={`mailto:${data.contactInfo.email}`} className={cn("font-bold text-[var(--primary)]")}>{data.contactInfo.email}</a></div>}
-            {data.contactInfo.hours && <div><p className={cn("font-bold mb-1", isDark?"text-white":"text-[var(--secondary)]")}>🕐 Giờ</p><p className={isDark?"text-white/60":"text-[var(--secondary)]/60"}>{data.contactInfo.hours}</p></div>}
+            {data.contactInfo.address && <div><p className={cn("font-bold mb-1", isDark?"text-white":"text-[var(--secondary)]")}>{data.addressLabel || "📍 Địa chỉ"}</p><p className={isDark?"text-white/60":"text-[var(--secondary)]/60"}>{data.contactInfo.address}</p></div>}
+            {data.contactInfo.phone && <div><p className={cn("font-bold mb-1", isDark?"text-white":"text-[var(--secondary)]")}>{data.phoneLabel || "☎️ SĐT"}</p><a href={`tel:${data.contactInfo.phone}`} className={cn("font-bold text-[var(--primary)]")}>{data.contactInfo.phone}</a></div>}
+            {data.contactInfo.email && <div><p className={cn("font-bold mb-1", isDark?"text-white":"text-[var(--secondary)]")}>{data.emailLabel || "✉️ Email"}</p><a href={`mailto:${data.contactInfo.email}`} className={cn("font-bold text-[var(--primary)]")}>{data.contactInfo.email}</a></div>}
+            {data.contactInfo.hours && <div><p className={cn("font-bold mb-1", isDark?"text-white":"text-[var(--secondary)]")}>{data.hoursLabel || "🕐 Giờ"}</p><p className={isDark?"text-white/60":"text-[var(--secondary)]/60"}>{data.contactInfo.hours}</p></div>}
           </div>
         )}
         <div className={isSplit?"lg:flex-1":"max-w-2xl mx-auto w-full"}>

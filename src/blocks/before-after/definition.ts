@@ -7,6 +7,7 @@ export interface BeforeAfterData {
   afterImage: string;
   beforeLabel?: string;
   afterLabel?: string;
+  helperText?: string;
   title?: string;
   settings?: any;
 }
@@ -23,6 +24,7 @@ export const BeforeAfterDef: BlockDefinition<BlockData<BeforeAfterData>> = {
     afterImage: "https://images.unsplash.com/photo-1611186871348-b1ec696e5238?auto=format&fit=crop&q=80&w=800",
     beforeLabel: "Trước",
     afterLabel: "Sau",
+    helperText: "Kéo để so sánh",
   },
   renderer: BeforeAfterDispatcher,
   editor: BeforeAfterEditor,

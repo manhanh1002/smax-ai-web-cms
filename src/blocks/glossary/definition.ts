@@ -3,7 +3,7 @@ import { GlossaryDispatcher } from "./index";
 import { GlossaryEditor } from "./editor";
 
 export interface GlossaryTerm { term: string; definition: string; category?: string; example?: string; }
-export interface GlossaryData { title: string; terms: GlossaryTerm[]; showFilter?: boolean; showSearch?: boolean; settings?: any; }
+export interface GlossaryData { title: string; terms: GlossaryTerm[]; showFilter?: boolean; showSearch?: boolean; searchPlaceholder?: string; settings?: any; }
 
 export const GlossaryDef: BlockDefinition<BlockData<GlossaryData>> = {
   type: "glossary",
@@ -16,7 +16,8 @@ export const GlossaryDef: BlockDefinition<BlockData<GlossaryData>> = {
     title: "Thuật ngữ",
     terms: [],
     showSearch: true,
-    showFilter: true
+    showFilter: true,
+    searchPlaceholder: "Tìm kiếm...",
   },
   renderer: GlossaryDispatcher,
   editor: GlossaryEditor,

@@ -61,9 +61,16 @@ export function IconGridSaaS({ data, isDark, settings }: { data: IconGridData; i
 
       <div className={cn(
         "grid grid-cols-1 md:grid-cols-2 gap-8",
-        (data.columns || (isCompact ? 3 : 4)) === 3 ? "lg:grid-cols-3" :
+        (data.columns || (isCompact ? 3 : 4)) === 3 ? (
+          (data.items??[]).length === 1 ? "lg:grid-cols-1 max-w-md mx-auto" :
+          (data.items??[]).length === 2 ? "lg:grid-cols-2 max-w-4xl mx-auto" : "lg:grid-cols-3"
+        ) :
         (data.columns || (isCompact ? 3 : 4)) === 5 ? "lg:grid-cols-5" :
-        "lg:grid-cols-4"
+        (
+          (data.items??[]).length === 1 ? "lg:grid-cols-1 max-w-md mx-auto" :
+          (data.items??[]).length === 2 ? "lg:grid-cols-2 max-w-4xl mx-auto" :
+          (data.items??[]).length === 3 ? "lg:grid-cols-3 max-w-5xl mx-auto" : "lg:grid-cols-4"
+        )
       )}>
         {data.items?.map((item, i) => {
           const IconComponent = (LucideIcons as any)[item.icon || "Zap"] || LucideIcons.Zap;
