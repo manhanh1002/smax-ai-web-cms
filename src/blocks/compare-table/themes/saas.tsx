@@ -33,11 +33,13 @@ export function CompareTableSaaS({ data, isDark }: { data: CompareTableData; isD
           <tbody>
             {(data.categories??[]).map((cat, ci) => (
               <React.Fragment key={ci}>
-                <tr>
-                  <td colSpan={(data.plans?.length??0)+1} className={cn("px-5 py-3 font-bold text-sm uppercase tracking-wider", isDark?"bg-white/5 text-slate-200":"bg-slate-50 text-slate-700")}>
-                    {cat.name}
-                  </td>
-                </tr>
+                {cat.name?.trim() && (
+                  <tr>
+                    <td colSpan={(data.plans?.length??0)+1} className={cn("px-5 py-3 font-bold text-sm uppercase tracking-wider", isDark?"bg-white/5 text-slate-200":"bg-slate-50 text-slate-700")}>
+                      {cat.name}
+                    </td>
+                  </tr>
+                )}
                 {(cat.features??[]).map((feat, fi) => (
                   <tr key={fi} className={cn("border-t", isDark?"border-white/5":"border-slate-100")}>
                     <td className={cn("px-5 py-3 text-sm font-medium", isDark?"text-slate-300":"text-slate-700")}>{feat.label}</td>
