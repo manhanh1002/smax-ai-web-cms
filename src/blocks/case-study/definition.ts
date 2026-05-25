@@ -1,6 +1,4 @@
 import { BlockDefinition } from "../types";
-import { CaseStudyDispatcher } from "./index";
-import { CaseStudyEditor } from "./editor";
 
 export interface CaseStudyItem {
   title: string;
@@ -25,8 +23,8 @@ export const CaseStudyBlockDef: BlockDefinition<CaseStudyBlockData> = {
   description: "Slider dự án thực tế kèm số liệu và trích dẫn.",
   category: "social",
   supportedThemes: ["saas"],
-  renderer: CaseStudyDispatcher as any,
-  editor: CaseStudyEditor as any,
+  renderer: null as any,
+  editor: null as any,
   defaultData: {
     badge: "THÀNH TỰU",
     title: "Câu chuyện thành công",

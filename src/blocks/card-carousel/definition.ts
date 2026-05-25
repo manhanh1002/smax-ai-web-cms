@@ -1,6 +1,4 @@
 import { BlockDefinition } from "../types";
-import { CardCarouselDispatcher } from "./index";
-import { CardCarouselEditor } from "./editor";
 
 export interface CarouselCard {
   title: string;
@@ -31,8 +29,8 @@ export const CardCarouselBlockDef: BlockDefinition<CardCarouselBlockData> = {
   description: "Dải card tính năng trượt ngang mượt mà.",
   category: "social",
   supportedThemes: ["saas"],
-  renderer: CardCarouselDispatcher as any,
-  editor: CardCarouselEditor as any,
+  renderer: null as any,
+  editor: null as any,
   defaultData: {
     badge: "KHÁM PHÁ",
     title: "Dự án tiêu biểu",

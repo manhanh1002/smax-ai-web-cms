@@ -1,6 +1,4 @@
 import type { BlockDefinition, BlockData } from "@/blocks/types";
-import { JobListingsDispatcher } from "./index";
-import { JobListingsEditor } from "./editor";
 
 export interface JobListing { title: string; department: string; location: string; type: "full-time"|"part-time"|"contract"|"remote"; applyAction?: any; salary?: string; description?: string; }
 export interface JobListingsData {
@@ -32,6 +30,6 @@ export const JobListingsDef: BlockDefinition<BlockData<JobListingsData>> = {
     allFilterLabel: "Tất cả",
     emptyStateText: "Không có vị trí nào",
   },
-  renderer: JobListingsDispatcher,
-  editor: JobListingsEditor,
+  renderer: null as any,
+  editor: null as any,
 };

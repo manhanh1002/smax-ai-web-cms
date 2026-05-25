@@ -1,17 +1,52 @@
 import React from "react";
 import { BlockDefinition, PageBlock } from "./types";
+import { registerGlobalRegistry } from "./global-registry-handler";
 
-// Import all renderers
-import { 
-  TrustedByBlock, FeaturesBlock, SuitableForBlock, 
-  BentoGridBlock, TestimonialsBlock, FAQBlock, CTABlock, 
-  VerticalTabsBlock, HorizontalTabsBlock, ProcessStepsBlock, 
-  HeroSecondaryBlock, StatsCounterBlock, FeatureIconGrid, 
-  BlogPreviewBlock, CaseStudySliderBlock, CardCarouselBlock, 
-  PricingComparisonBlock, RichTextBlock
-} from "@/components/sections";
+// Import all dispatchers (renderers)
+import { HeroBlockDispatcher } from "@/blocks/hero";
+import { HeroSecondaryDispatcher } from "@/blocks/hero-secondary";
+import { CTABlockDispatcher } from "@/blocks/cta";
+import { FeaturesBlockDispatcher } from "@/blocks/features";
+import { RichTextBlockDispatcher } from "@/blocks/rich-text";
+import { TestimonialsBlockDispatcher } from "@/blocks/testimonials";
+import { FAQBlockDispatcher } from "@/blocks/faq";
+import { TrustedByBlockDispatcher } from "@/blocks/trusted-by";
+import { StatsBlockDispatcher } from "@/blocks/stats";
+import { BentoBlockDispatcher } from "@/blocks/bento";
+import { IconGridDispatcher } from "@/blocks/icon-grid";
+import { VerticalTabsDispatcher } from "@/blocks/vertical-tabs";
+import { HorizontalTabsDispatcher } from "@/blocks/horizontal-tabs";
+import { ProcessDispatcher } from "@/blocks/process";
+import { PricingDispatcher } from "@/blocks/pricing";
+import { SuitableForDispatcher } from "@/blocks/suitable-for";
+import { BlogPreviewDispatcher } from "@/blocks/blog-preview";
+import { CardCarouselDispatcher } from "@/blocks/card-carousel";
+import { CaseStudyDispatcher } from "@/blocks/case-study";
+import { FormBlock } from "@/components/sections/FormBlock";
 
-// Import new blocks
+// Import all editors
+import { HeroBlockEditor } from "@/blocks/hero/editor";
+import { HeroSecondaryEditor } from "@/blocks/hero-secondary/editor";
+import { CTABlockEditor } from "@/blocks/cta/editor";
+import { FeaturesBlockEditor } from "@/blocks/features/editor";
+import { RichTextBlockEditor } from "@/blocks/rich-text/editor";
+import { TestimonialsBlockEditor } from "@/blocks/testimonials/editor";
+import { FAQBlockEditor } from "@/blocks/faq/editor";
+import { TrustedByBlockEditor } from "@/blocks/trusted-by/editor";
+import { StatsBlockEditor } from "@/blocks/stats/editor";
+import { BentoBlockEditor } from "@/blocks/bento/editor";
+import { IconGridEditor } from "@/blocks/icon-grid/editor";
+import { VerticalTabsEditor } from "@/blocks/vertical-tabs/editor";
+import { HorizontalTabsEditor } from "@/blocks/horizontal-tabs/editor";
+import { ProcessEditor } from "@/blocks/process/editor";
+import { PricingEditor } from "@/blocks/pricing/editor";
+import { SuitableForEditor } from "@/blocks/suitable-for/editor";
+import { BlogPreviewEditor } from "@/blocks/blog-preview/editor";
+import { CardCarouselEditor } from "@/blocks/card-carousel/editor";
+import { CaseStudyEditor } from "@/blocks/case-study/editor";
+import { FormBlockEditor } from "@/components/cms/block-editors/FormBlockEditor";
+
+// Import new blocks definitions
 import { HeroBlockDef } from "@/blocks/hero/definition";
 import { CTABlockDef } from "@/blocks/cta/definition";
 import { FeaturesBlockDef } from "@/blocks/features/definition";
@@ -34,51 +69,31 @@ import { CaseStudyBlockDef } from "@/blocks/case-study/definition";
 import { FormBlockDef } from "@/blocks/form/definition";
 import { CUSTOM_BLOCKS_V2 } from "./custom-blocks-v2-registry";
 
-// Import all editors
-import { TrustedByBlockEditor } from "@/components/cms/block-editors/TrustedByBlockEditor";
-import { FeaturesBlockEditor } from "@/components/cms/block-editors/FeaturesBlockEditor";
-import { SuitableForBlockEditor } from "@/components/cms/block-editors/SuitableForBlockEditor";
-import { BentoGridBlockEditor } from "@/components/cms/block-editors/BentoGridBlockEditor";
-import { TestimonialsBlockEditor } from "@/components/cms/block-editors/TestimonialsBlockEditor";
-import { FAQBlockEditor } from "@/components/cms/block-editors/FAQBlockEditor";
-import { CTABlockEditor } from "@/components/cms/block-editors/CTABlockEditor";
-import { VerticalTabsBlockEditor } from "@/components/cms/block-editors/VerticalTabsBlockEditor";
-import { HorizontalTabsBlockEditor } from "@/components/cms/block-editors/HorizontalTabsBlockEditor";
-import { ProcessStepsBlockEditor } from "@/components/cms/block-editors/ProcessStepsBlockEditor";
-import { HeroSecondaryBlockEditor } from "@/components/cms/block-editors/HeroSecondaryBlockEditor";
-import { StatsCounterBlockEditor } from "@/components/cms/block-editors/StatsCounterBlockEditor";
-import { FeatureIconGridEditor } from "@/components/cms/block-editors/FeatureIconGridEditor";
-import { BlogPreviewBlockEditor } from "@/components/cms/block-editors/BlogPreviewBlockEditor";
-import { CaseStudySliderBlockEditor } from "@/components/cms/block-editors/CaseStudySliderBlockEditor";
-import { CardCarouselBlockEditor } from "@/components/cms/block-editors/CardCarouselBlockEditor";
-import { PricingComparisonBlockEditor } from "@/components/cms/block-editors/PricingComparisonBlockEditor";
-import { RichTextBlockEditor } from "@/components/cms/block-editors/RichTextBlockEditor";
-
 // Import global_ref block components
 import { GlobalRefRenderer } from "@/components/cms/GlobalRefRenderer";
 import { GlobalRefBlockEditor } from "@/components/cms/block-editors/GlobalRefBlockEditor";
 
 export const MASTER_BLOCK_REGISTRY: BlockDefinition[] = [
-  HeroBlockDef,
-  HeroSecondaryDef,
-  CTABlockDef,
-  FeaturesBlockDef,
-  RichTextBlockDef,
-  TestimonialsBlockDef,
-  FAQBlockDef,
-  TrustedByBlockDef,
-  StatsBlockDef,
-  BentoBlockDef,
-  IconGridDef,
-  VerticalTabsBlockDef,
-  HorizontalTabsBlockDef,
-  ProcessBlockDef,
-  PricingBlockDef,
-  SuitableForBlockDef,
-  BlogPreviewBlockDef,
-  CardCarouselBlockDef,
-  { ...CaseStudyBlockDef },
-  { ...FormBlockDef },
+  { ...HeroBlockDef, renderer: HeroBlockDispatcher, editor: HeroBlockEditor },
+  { ...HeroSecondaryDef, renderer: HeroSecondaryDispatcher, editor: HeroSecondaryEditor },
+  { ...CTABlockDef, renderer: CTABlockDispatcher, editor: CTABlockEditor },
+  { ...FeaturesBlockDef, renderer: FeaturesBlockDispatcher, editor: FeaturesBlockEditor },
+  { ...RichTextBlockDef, renderer: RichTextBlockDispatcher, editor: RichTextBlockEditor },
+  { ...TestimonialsBlockDef, renderer: TestimonialsBlockDispatcher, editor: TestimonialsBlockEditor },
+  { ...FAQBlockDef, renderer: FAQBlockDispatcher, editor: FAQBlockEditor },
+  { ...TrustedByBlockDef, renderer: TrustedByBlockDispatcher, editor: TrustedByBlockEditor },
+  { ...StatsBlockDef, renderer: StatsBlockDispatcher, editor: StatsBlockEditor },
+  { ...BentoBlockDef, renderer: BentoBlockDispatcher, editor: BentoBlockEditor },
+  { ...IconGridDef, renderer: IconGridDispatcher, editor: IconGridEditor },
+  { ...VerticalTabsBlockDef, renderer: VerticalTabsDispatcher, editor: VerticalTabsEditor },
+  { ...HorizontalTabsBlockDef, renderer: HorizontalTabsDispatcher, editor: HorizontalTabsEditor },
+  { ...ProcessBlockDef, renderer: ProcessDispatcher, editor: ProcessEditor },
+  { ...PricingBlockDef, renderer: PricingDispatcher, editor: PricingEditor },
+  { ...SuitableForBlockDef, renderer: SuitableForDispatcher, editor: SuitableForEditor },
+  { ...BlogPreviewBlockDef, renderer: BlogPreviewDispatcher, editor: BlogPreviewEditor },
+  { ...CardCarouselBlockDef, renderer: CardCarouselDispatcher, editor: CardCarouselEditor },
+  { ...CaseStudyBlockDef, renderer: CaseStudyDispatcher, editor: CaseStudyEditor },
+  { ...FormBlockDef, renderer: FormBlock, editor: FormBlockEditor },
   ...CUSTOM_BLOCKS_V2,
 ];
 
@@ -116,3 +131,11 @@ export function getBlockDefaultData(type: string): any {
   const def = getBlockDefinition(type);
   return def ? def.defaultData : { darkMode: false };
 }
+
+registerGlobalRegistry({
+  renderBlockRenderer,
+  renderBlockEditor,
+  getBlockDefinition,
+  getBlockDefaultData,
+  MASTER_BLOCK_REGISTRY,
+});

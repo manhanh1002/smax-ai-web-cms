@@ -1,6 +1,4 @@
 import type { BlockDefinition, BlockData } from "@/blocks/types";
-import { TimelineDispatcher } from "./index";
-import { TimelineEditor } from "./editor";
 
 export interface TimelineItem { year: string; title: string; description: string; icon?: string; highlight?: boolean; }
 export interface TimelineData { sectionLabel?: string; title: string; titleHighlight?: string; subtitle?: string; items: TimelineItem[]; orientation?: "vertical"|"horizontal"; settings?: any; }
@@ -17,6 +15,6 @@ export const TimelineDef: BlockDefinition<BlockData<TimelineData>> = {
     items: [],
     orientation: "vertical"
   },
-  renderer: TimelineDispatcher,
-  editor: TimelineEditor,
+  renderer: null as any,
+  editor: null as any,
 };

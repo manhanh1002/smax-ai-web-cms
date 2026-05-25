@@ -1,6 +1,4 @@
 import type { BlockDefinition, BlockData } from "@/blocks/types";
-import { MobileAppPreviewDispatcher } from "./index";
-import { MobileAppPreviewEditor } from "./editor";
 
 export interface MobileAppPreviewData {
   title: string;
@@ -28,6 +26,6 @@ export const MobileAppPreviewDef: BlockDefinition<BlockData<MobileAppPreviewData
     playStoreText: "Google Play",
     features: ["Tốc độ nhanh", "Giao diện đẹp", "Bảo mật cao"],
   },
-  renderer: MobileAppPreviewDispatcher,
-  editor: MobileAppPreviewEditor,
+  renderer: null as any,
+  editor: null as any,
 };

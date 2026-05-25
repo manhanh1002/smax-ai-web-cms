@@ -1,6 +1,4 @@
 import { BlockDefinition } from "../types";
-import { IconGridDispatcher } from "./index";
-import { IconGridEditor } from "./editor";
 
 export interface IconGridItem {
   title: string;
@@ -26,8 +24,8 @@ export const IconGridDef: BlockDefinition<IconGridData> = {
   description: "Lưới các tính năng kỹ thuật kèm Icon nhỏ.",
   category: "content",
   supportedThemes: ["saas"],
-  renderer: IconGridDispatcher as any,
-  editor: IconGridEditor as any,
+  renderer: null as any,
+  editor: null as any,
   defaultData: {
     badge: "Tính năng kỹ thuật",
     title: "Sức mạnh từ bên trong",

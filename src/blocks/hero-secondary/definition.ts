@@ -1,6 +1,4 @@
 import { BlockDefinition } from "../types";
-import { HeroSecondaryDispatcher } from "./index";
-import { HeroSecondaryEditor } from "./editor";
 
 export interface HeroSecondaryData {
   badge?: string;
@@ -19,8 +17,8 @@ export const HeroSecondaryDef: BlockDefinition<HeroSecondaryData> = {
   description: "Khối tiêu đề phụ kèm ảnh lớn một bên.",
   category: "layout",
   supportedThemes: ["saas"],
-  renderer: HeroSecondaryDispatcher as any,
-  editor: HeroSecondaryEditor as any,
+  renderer: null as any,
+  editor: null as any,
   defaultData: {
     badge: "GIỚI THIỆU",
     title: "Giải pháp toàn diện cho doanh nghiệp",

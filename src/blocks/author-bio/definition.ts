@@ -1,6 +1,4 @@
 import type { BlockDefinition, BlockData } from "@/blocks/types";
-import { AuthorBioDispatcher } from "./index";
-import { AuthorBioEditor } from "./editor";
 
 export interface SocialLink { platform: "linkedin"|"twitter"|"facebook"|"website"|"github"; url: string; }
 
@@ -31,6 +29,6 @@ export const AuthorBioDef: BlockDefinition<BlockData<AuthorBioData>> = {
     layout: "horizontal",
     authorLabel: "Về tác giả",
   },
-  renderer: AuthorBioDispatcher,
-  editor: AuthorBioEditor,
+  renderer: null as any,
+  editor: null as any,
 };

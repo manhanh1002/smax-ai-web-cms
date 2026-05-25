@@ -1,6 +1,4 @@
 import type { BlockDefinition, BlockData } from "@/blocks/types";
-import { MapContactDispatcher } from "./index";
-import { MapContactEditor } from "./editor";
 
 export interface Office { name: string; address: string; phone: string; email: string; hours?: string; }
 export interface MapContactData { mapEmbedUrl: string; offices: Office[]; title?: string; layout?: "map-left"|"map-right"|"full-width"; settings?: any; }
@@ -17,6 +15,6 @@ export const MapContactDef: BlockDefinition<BlockData<MapContactData>> = {
     offices: [],
     layout: "map-left"
   },
-  renderer: MapContactDispatcher,
-  editor: MapContactEditor,
+  renderer: null as any,
+  editor: null as any,
 };

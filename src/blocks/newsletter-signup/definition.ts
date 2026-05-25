@@ -1,6 +1,4 @@
 import type { BlockDefinition, BlockData } from "@/blocks/types";
-import { NewsletterSignupDispatcher } from "./index";
-import { NewsletterSignupEditor } from "./editor";
 
 export interface NewsletterSignupData {
   title: string;
@@ -27,6 +25,6 @@ export const NewsletterSignupDef: BlockDefinition<BlockData<NewsletterSignupData
     submitText: "Đăng ký",
     bgStyle: "light",
   },
-  renderer: NewsletterSignupDispatcher,
-  editor: NewsletterSignupEditor,
+  renderer: null as any,
+  editor: null as any,
 };

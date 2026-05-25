@@ -6,8 +6,8 @@ export const FormBlockDef: BlockDefinition = {
   type: "form",
   label: "📋 Native Form",
   description: "Nhúng form tự thiết kế với các tùy chọn layout chuyên nghiệp.",
-  renderer: FormBlock,
-  editor: FormBlockEditor,
+  renderer: null as any,
+  editor: null as any,
   defaultData: {
     badge: "LIÊN HỆ",
     title: "Sẵn sàng bắt đầu",

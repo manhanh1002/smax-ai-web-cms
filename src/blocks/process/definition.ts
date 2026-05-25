@@ -1,6 +1,4 @@
 import { BlockDefinition } from "../types";
-import { ProcessDispatcher } from "./index";
-import { ProcessEditor } from "./editor";
 
 export interface ProcessStep {
   title: string;
@@ -22,8 +20,8 @@ export const ProcessBlockDef: BlockDefinition<ProcessBlockData> = {
   description: "Các bước triển khai (1, 2, 3...).",
   category: "content",
   supportedThemes: ["saas"],
-  renderer: ProcessDispatcher as any,
-  editor: ProcessEditor as any,
+  renderer: null as any,
+  editor: null as any,
   defaultData: {
     badge: "Quy trình",
     title: "Bắt đầu chỉ với 3 bước",

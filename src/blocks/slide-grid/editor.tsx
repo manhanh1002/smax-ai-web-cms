@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { SlideGridData, GridLayout } from "./definition";
-import { renderBlockEditor, getBlockDefinition, getBlockDefaultData, MASTER_BLOCK_REGISTRY } from "@/lib/cms/block-system/registry";
+import { renderBlockEditor, getBlockDefinition, getBlockDefaultData, MASTER_BLOCK_REGISTRY } from "@/lib/cms/block-system/global-registry-handler";
 import { Button } from "@/components/ui/Button";
 import { ArrowLeft, Trash2, Plus, LayoutGrid } from "lucide-react";
 import { cn } from "@/lib/utils";

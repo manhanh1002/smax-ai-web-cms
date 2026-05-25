@@ -1,6 +1,4 @@
 import { BlockDefinition } from "../types";
-import { HorizontalTabsDispatcher } from "./index";
-import { HorizontalTabsEditor } from "./editor";
 
 export interface HorizontalTabItem {
   label: string;
@@ -25,8 +23,8 @@ export const HorizontalTabsBlockDef: BlockDefinition<HorizontalTabsBlockData> = 
   description: "Các tab ngang phân loại giải pháp.",
   category: "layout",
   supportedThemes: ["saas"],
-  renderer: HorizontalTabsDispatcher as any,
-  editor: HorizontalTabsEditor as any,
+  renderer: null as any,
+  editor: null as any,
   defaultData: {
     badge: "Tính năng",
     title: "Khám phá các module",

@@ -1,6 +1,4 @@
 import type { BlockDefinition, BlockData } from "@/blocks/types";
-import { AnnouncementBarDispatcher } from "./index";
-import { AnnouncementBarEditor } from "./editor";
 
 export interface AnnouncementBarData {
   message: string;
@@ -26,6 +24,6 @@ export const AnnouncementBarDef: BlockDefinition<BlockData<AnnouncementBarData>>
     bgColor: "violet",
     dismissible: true,
   },
-  renderer: AnnouncementBarDispatcher,
-  editor: AnnouncementBarEditor,
+  renderer: null as any,
+  editor: null as any,
 };

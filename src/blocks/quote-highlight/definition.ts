@@ -1,6 +1,4 @@
 import type { BlockDefinition, BlockData } from "@/blocks/types";
-import { QuoteHighlightDispatcher } from "./index";
-import { QuoteHighlightEditor } from "./editor";
 
 export interface QuoteHighlightData {
   quote: string;
@@ -27,6 +25,6 @@ export const QuoteHighlightDef: BlockDefinition<BlockData<QuoteHighlightData>> =
     accentColor: "violet",
     alignment: "left",
   },
-  renderer: QuoteHighlightDispatcher,
-  editor: QuoteHighlightEditor,
+  renderer: null as any,
+  editor: null as any,
 };

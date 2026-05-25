@@ -1,6 +1,4 @@
 import { BlockDefinition, BlockData } from "../types";
-import { HeroBlockDispatcher } from "./index";
-import { HeroBlockEditor } from "./editor";
 
 export interface HeroBlockData {
   theme?: "saas" | "corporate";
@@ -46,6 +44,6 @@ export const HeroBlockDef: BlockDefinition<BlockData<HeroBlockData>> = {
     image: "",
     darkMode: false
   },
-  renderer: HeroBlockDispatcher,
-  editor: HeroBlockEditor
+  renderer: null as any,
+  editor: null as any
 };

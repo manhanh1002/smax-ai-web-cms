@@ -1,6 +1,4 @@
 import { BlockDefinition } from "../types";
-import { SuitableForDispatcher } from "./index";
-import { SuitableForEditor } from "./editor";
 
 export interface SuitableCard {
   tag?: string;
@@ -24,8 +22,8 @@ export const SuitableForBlockDef: BlockDefinition<SuitableForBlockData> = {
   description: "Danh sách thẻ đa năng (3 cột) kèm hình ảnh hoặc icon.",
   category: "marketing",
   supportedThemes: ["saas"],
-  renderer: SuitableForDispatcher as any,
-  editor: SuitableForEditor as any,
+  renderer: null as any,
+  editor: null as any,
   defaultData: {
     badge: "DANH SÁCH",
     title: "Khám phá các tính năng",

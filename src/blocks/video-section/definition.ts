@@ -1,6 +1,4 @@
 import type { BlockDefinition, BlockData } from "@/blocks/types";
-import { VideoSectionDispatcher } from "./index";
-import { VideoSectionEditor } from "./editor";
 
 export interface VideoSectionData {
   videoUrl: string;
@@ -24,6 +22,6 @@ export const VideoSectionDef: BlockDefinition<BlockData<VideoSectionData>> = {
     title: "Tiêu đề video",
     layout: "centered",
   },
-  renderer: VideoSectionDispatcher,
-  editor: VideoSectionEditor,
+  renderer: null as any,
+  editor: null as any,
 };

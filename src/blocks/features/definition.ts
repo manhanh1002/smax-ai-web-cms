@@ -1,6 +1,4 @@
 import { BlockDefinition } from "../types";
-import { FeaturesBlockDispatcher } from "./index";
-import { FeaturesBlockEditor } from "./editor";
 
 export interface FeatureItem {
   tag?: string;
@@ -27,8 +25,8 @@ export const FeaturesBlockDef: BlockDefinition<FeaturesBlockData> = {
   description: "Các hàng tính năng xen kẽ với điểm nhấn và số liệu.",
   category: "content",
   supportedThemes: ["saas"],
-  renderer: FeaturesBlockDispatcher as any,
-  editor: FeaturesBlockEditor as any,
+  renderer: null as any,
+  editor: null as any,
   defaultData: {
     badge: "Tính năng chính",
     title: "Công cụ mạnh mẽ cho doanh nghiệp",

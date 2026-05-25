@@ -3,7 +3,7 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 import { SlideGridData, GridLayout } from "./definition";
-import { renderBlockRenderer } from "@/lib/cms/block-system/registry";
+import { renderBlockRenderer } from "@/lib/cms/block-system/global-registry-handler";
 
 const bgMap: Record<string, string> = {
   default: "bg-white",

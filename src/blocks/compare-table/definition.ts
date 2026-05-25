@@ -1,6 +1,4 @@
 import type { BlockDefinition, BlockData } from "@/blocks/types";
-import { CompareTableDispatcher } from "./index";
-import { CompareTableEditor } from "./editor";
 
 export interface Feature { label: string; values: (boolean|string|number)[]; }
 export interface FeatureCategory { name: string; features: Feature[]; }
@@ -18,6 +16,6 @@ export const CompareTableDef: BlockDefinition<BlockData<CompareTableData>> = {
     plans: [],
     categories: []
   },
-  renderer: CompareTableDispatcher,
-  editor: CompareTableEditor,
+  renderer: null as any,
+  editor: null as any,
 };

@@ -1,6 +1,4 @@
 import type { BlockDefinition, BlockData } from "@/blocks/types";
-import { PageHeaderDispatcher } from "./index";
-import { PageHeaderEditor } from "./editor";
 
 export interface Breadcrumb { label: string; action?: any; }
 
@@ -30,6 +28,6 @@ export const PageHeaderDef: BlockDefinition<BlockData<PageHeaderData>> = {
     tags: [],
     alignment: "left",
   },
-  renderer: PageHeaderDispatcher,
-  editor: PageHeaderEditor,
+  renderer: null as any,
+  editor: null as any,
 };

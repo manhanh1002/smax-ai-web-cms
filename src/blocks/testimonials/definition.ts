@@ -1,6 +1,4 @@
 import { BlockDefinition } from "../types";
-import { TestimonialsBlockDispatcher } from "./index";
-import { TestimonialsBlockEditor } from "./editor";
 
 export interface TestimonialItem {
   quote: string;
@@ -25,8 +23,8 @@ export const TestimonialsBlockDef: BlockDefinition<TestimonialsBlockData> = {
   description: "Trích dẫn khách hàng với ảnh đại diện, vai trò và đánh giá sao.",
   category: "social",
   supportedThemes: ["saas"],
-  renderer: TestimonialsBlockDispatcher as any,
-  editor: TestimonialsBlockEditor as any,
+  renderer: null as any,
+  editor: null as any,
   defaultData: {
     items: [
       {

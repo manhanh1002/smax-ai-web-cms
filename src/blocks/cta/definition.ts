@@ -1,5 +1,3 @@
-import { CTABlockDispatcher } from "./index";
-import { CTABlockEditor } from "./editor";
 import { BlockDefinition } from "../types";
 
 export interface CTABlockData {
@@ -19,7 +17,7 @@ export const CTABlockDef: BlockDefinition<CTABlockData> = {
   description: "Khối kêu gọi hành động với Form liên hệ hoặc Iframe.",
   category: "marketing",
   supportedThemes: ["saas"],
-  renderer: CTABlockDispatcher as any,
-  editor: CTABlockEditor as any,
+  renderer: null as any,
+  editor: null as any,
   defaultData: { title: "Ready to scale?", subtitle: "Start your free trial today.", bullets: ["No credit card required"], formUrl: "", formHeight: 500 }
 };

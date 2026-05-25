@@ -1,6 +1,4 @@
 import { BlockDefinition } from "../types";
-import { PricingDispatcher } from "./index";
-import { PricingEditor } from "./editor";
 
 export interface PricingPlan {
   name: string;
@@ -39,8 +37,8 @@ export const PricingBlockDef: BlockDefinition<PricingBlockData> = {
   description: "Bảng giá đa dịch vụ với các tab phân loại và bộ chuyển đổi Tháng/Năm chuyên nghiệp.",
   category: "marketing",
   supportedThemes: ["saas"],
-  renderer: PricingDispatcher as any,
-  editor: PricingEditor as any,
+  renderer: null as any,
+  editor: null as any,
   defaultData: {
     badge: "BẢNG GIÁ",
     title: "Giải pháp linh hoạt",

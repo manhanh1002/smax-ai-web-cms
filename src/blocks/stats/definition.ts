@@ -1,6 +1,4 @@
 import { BlockDefinition } from "../types";
-import { StatsBlockDispatcher } from "./index";
-import { StatsBlockEditor } from "./editor";
 
 export interface StatItem {
   value: string;
@@ -26,8 +24,8 @@ export const StatsBlockDef: BlockDefinition<StatsBlockData> = {
   description: "Dải con số thống kê nổi bật với hiệu ứng đếm số.",
   category: "content",
   supportedThemes: ["saas"],
-  renderer: StatsBlockDispatcher as any,
-  editor: StatsBlockEditor as any,
+  renderer: null as any,
+  editor: null as any,
   defaultData: {
     badge: "Số liệu",
     title: "Sức mạnh từ",

@@ -1,6 +1,4 @@
 import type { BlockDefinition, BlockData } from "@/blocks/types";
-import { FeatureChecklistDispatcher } from "./index";
-import { FeatureChecklistEditor } from "./editor";
 
 export interface ChecklistCol { label: string; sublabel?: string; items: {text:string;checked:boolean}[]; }
 export interface FeatureChecklistData { sectionLabel?: string; title: string; subtitle?: string; columnA: ChecklistCol; columnB: ChecklistCol; settings?: any; }
@@ -17,6 +15,6 @@ export const FeatureChecklistDef: BlockDefinition<BlockData<FeatureChecklistData
     columnA: { label: "Gói A", items: [] },
     columnB: { label: "Gói B", items: [] }
   },
-  renderer: FeatureChecklistDispatcher,
-  editor: FeatureChecklistEditor,
+  renderer: null as any,
+  editor: null as any,
 };

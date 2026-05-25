@@ -1,6 +1,4 @@
 import type { BlockDefinition, BlockData } from "@/blocks/types";
-import { GlossaryDispatcher } from "./index";
-import { GlossaryEditor } from "./editor";
 
 export interface GlossaryTerm { term: string; definition: string; category?: string; example?: string; }
 export interface GlossaryData { title: string; terms: GlossaryTerm[]; showFilter?: boolean; showSearch?: boolean; searchPlaceholder?: string; settings?: any; }
@@ -19,6 +17,6 @@ export const GlossaryDef: BlockDefinition<BlockData<GlossaryData>> = {
     showFilter: true,
     searchPlaceholder: "Tìm kiếm...",
   },
-  renderer: GlossaryDispatcher,
-  editor: GlossaryEditor,
+  renderer: null as any,
+  editor: null as any,
 };

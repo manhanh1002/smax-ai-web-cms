@@ -1,6 +1,4 @@
 import { BlockDefinition } from "../types";
-import { BentoBlockDispatcher } from "./index";
-import { BentoBlockEditor } from "./editor";
 
 export interface BentoCard {
   title: string;
@@ -24,8 +22,8 @@ export const BentoBlockDef: BlockDefinition<BentoBlockData> = {
   description: "Lưới tính năng phong cách Apple (Bento) hiện đại.",
   category: "layout",
   supportedThemes: ["saas"],
-  renderer: BentoBlockDispatcher as any,
-  editor: BentoBlockEditor as any,
+  renderer: null as any,
+  editor: null as any,
   defaultData: {
     badge: "Tính năng",
     title: "Mọi thứ bạn cần",

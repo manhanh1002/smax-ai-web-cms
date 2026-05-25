@@ -1,6 +1,4 @@
 import type { BlockDefinition, BlockData } from "@/blocks/types";
-import { ContactFormDispatcher } from "./index";
-import { ContactFormEditor } from "./editor";
 
 export interface FormField { name: string; label: string; type: "text"|"email"|"tel"|"textarea"|"select"; required: boolean; placeholder?: string; options?: string[]; }
 export interface ContactInfo { address?: string; phone?: string; email?: string; hours?: string; }
@@ -36,6 +34,6 @@ export const ContactFormDef: BlockDefinition<BlockData<ContactFormData>> = {
     emailLabel: "✉️ Email",
     hoursLabel: "🕐 Giờ",
   },
-  renderer: ContactFormDispatcher,
-  editor: ContactFormEditor,
+  renderer: null as any,
+  editor: null as any,
 };

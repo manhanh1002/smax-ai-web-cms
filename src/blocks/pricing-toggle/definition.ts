@@ -1,6 +1,4 @@
 import type { BlockDefinition, BlockData } from "@/blocks/types";
-import { PricingToggleDispatcher } from "./index";
-import { PricingToggleEditor } from "./editor";
 
 export interface PricingPlan { name: string; monthlyPrice: number; annualPrice: number; currency: string; description?: string; features: (string | { text: string; icon?: string })[]; ctaText: string; ctaAction?: any; popular?: boolean; badge?: string; }
 export interface PricingToggleData {
@@ -28,6 +26,6 @@ export const PricingToggleDef: BlockDefinition<BlockData<PricingToggleData>> = {
     monthlyLabel: "Tháng",
     yearlyLabel: "Năm",
   },
-  renderer: PricingToggleDispatcher,
-  editor: PricingToggleEditor,
+  renderer: null as any,
+  editor: null as any,
 };

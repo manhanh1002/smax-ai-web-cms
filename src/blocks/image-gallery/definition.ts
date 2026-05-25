@@ -1,6 +1,4 @@
 import type { BlockDefinition, BlockData } from "@/blocks/types";
-import { ImageGalleryDispatcher } from "./index";
-import { ImageGalleryEditor } from "./editor";
 
 export interface GalleryImage { src: string; alt: string; caption?: string; category?: string; }
 export interface ImageGalleryData { title?: string; images: GalleryImage[]; columns?: 2|3|4; showFilter?: boolean; enableLightbox?: boolean; settings?: any; }
@@ -18,6 +16,6 @@ export const ImageGalleryDef: BlockDefinition<BlockData<ImageGalleryData>> = {
     showFilter: true,
     enableLightbox: true
   },
-  renderer: ImageGalleryDispatcher,
-  editor: ImageGalleryEditor,
+  renderer: null as any,
+  editor: null as any,
 };

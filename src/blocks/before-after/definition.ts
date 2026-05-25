@@ -1,6 +1,4 @@
 import type { BlockDefinition, BlockData } from "@/blocks/types";
-import { BeforeAfterDispatcher } from "./index";
-import { BeforeAfterEditor } from "./editor";
 
 export interface BeforeAfterData {
   beforeImage: string;
@@ -26,6 +24,6 @@ export const BeforeAfterDef: BlockDefinition<BlockData<BeforeAfterData>> = {
     afterLabel: "Sau",
     helperText: "Kéo để so sánh",
   },
-  renderer: BeforeAfterDispatcher,
-  editor: BeforeAfterEditor,
+  renderer: null as any,
+  editor: null as any,
 };

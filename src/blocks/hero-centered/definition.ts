@@ -1,6 +1,4 @@
 import type { BlockDefinition, BlockData } from "@/blocks/types";
-import { HeroCenteredDispatcher } from "./index";
-import { HeroCenteredEditor } from "./editor";
 
 export interface HeroCenteredData {
   badge?: string;
@@ -32,6 +30,6 @@ export const HeroCenteredDef: BlockDefinition<BlockData<HeroCenteredData>> = {
     secondaryBtnText: "Xem demo",
     bgGradient: "purple",
   },
-  renderer: HeroCenteredDispatcher,
-  editor: HeroCenteredEditor,
+  renderer: null as any,
+  editor: null as any,
 };

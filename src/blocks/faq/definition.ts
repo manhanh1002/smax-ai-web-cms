@@ -1,6 +1,4 @@
 import { BlockDefinition } from "../types";
-import { FAQBlockDispatcher } from "./index";
-import { FAQBlockEditor } from "./editor";
 
 export interface FAQItem {
   question: string;
@@ -21,8 +19,8 @@ export const FAQBlockDef: BlockDefinition<FAQBlockData> = {
   description: "Danh sách câu hỏi Accordion giúp giải đáp thắc mắc.",
   category: "content",
   supportedThemes: ["saas"],
-  renderer: FAQBlockDispatcher as any,
-  editor: FAQBlockEditor as any,
+  renderer: null as any,
+  editor: null as any,
   defaultData: {
     badge: "Giải đáp thắc mắc",
     title: "Câu hỏi thường gặp",

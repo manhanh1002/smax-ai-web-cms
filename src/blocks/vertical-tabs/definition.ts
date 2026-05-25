@@ -1,6 +1,4 @@
 import { BlockDefinition } from "../types";
-import { VerticalTabsDispatcher } from "./index";
-import { VerticalTabsEditor } from "./editor";
 
 export interface VerticalTabItem {
   label: string;
@@ -25,8 +23,8 @@ export const VerticalTabsBlockDef: BlockDefinition<VerticalTabsBlockData> = {
   description: "Menu dọc bên trái, nội dung thay đổi bên phải.",
   category: "layout",
   supportedThemes: ["saas"],
-  renderer: VerticalTabsDispatcher as any,
-  editor: VerticalTabsEditor as any,
+  renderer: null as any,
+  editor: null as any,
   defaultData: {
     badge: "Giải pháp",
     title: "Phân loại theo nhu cầu",

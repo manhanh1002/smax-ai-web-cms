@@ -1,6 +1,4 @@
 import { BlockDefinition } from "../types";
-import { BlogPreviewDispatcher } from "./index";
-import { BlogPreviewEditor } from "./editor";
 
 export interface BlogPreviewBlockData {
   badge?: string;
@@ -16,8 +14,8 @@ export const BlogPreviewBlockDef: BlockDefinition<BlogPreviewBlockData> = {
   description: "Xem trước các bài viết mới nhất từ chuyên mục.",
   category: "marketing",
   supportedThemes: ["saas"],
-  renderer: BlogPreviewDispatcher as any,
-  editor: BlogPreviewEditor as any,
+  renderer: null as any,
+  editor: null as any,
   defaultData: {
     badge: "TIN TỨC",
     title: "Cập nhật mới nhất",

@@ -1,6 +1,4 @@
 import { BlockDefinition, PageBlock } from "../types";
-import { SlideGridDispatcher } from "./index";
-import { SlideGridEditor } from "./editor";
 
 export type GridLayout = 
   | "1x2" // 2 cols
@@ -24,8 +22,8 @@ export const SlideGridDef: BlockDefinition<SlideGridData> = {
   description: "Bố cục chia lưới đặc biệt cho slide, chứa tới 4 block con.",
   category: "layout",
   supportedThemes: ["saas", "corporate", "minimal"],
-  renderer: SlideGridDispatcher as any,
-  editor: SlideGridEditor as any,
+  renderer: null as any,
+  editor: null as any,
   defaultData: {
     layout: "1x2",
     gap: "medium",

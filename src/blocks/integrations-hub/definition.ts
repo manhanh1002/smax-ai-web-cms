@@ -1,6 +1,4 @@
 import type { BlockDefinition, BlockData } from "@/blocks/types";
-import { IntegrationsHubDispatcher } from "./index";
-import { IntegrationsHubEditor } from "./editor";
 
 export interface Integration { name: string; logo: string; category: string; description?: string; action?: any; featured?: boolean; }
 export interface IntegrationsHubData { title: string; integrations: Integration[]; categories: string[]; showSearch?: boolean; searchPlaceholder?: string; featuredLabel?: string; settings?: any; }
@@ -20,6 +18,6 @@ export const IntegrationsHubDef: BlockDefinition<BlockData<IntegrationsHubData>>
     searchPlaceholder: "Tìm kiếm tích hợp...",
     featuredLabel: "Nổi bật",
   },
-  renderer: IntegrationsHubDispatcher,
-  editor: IntegrationsHubEditor,
+  renderer: null as any,
+  editor: null as any,
 };
