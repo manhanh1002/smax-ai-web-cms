@@ -2,7 +2,7 @@ import type { BlockDefinition, BlockData } from "@/blocks/types";
 import { PricingToggleDispatcher } from "./index";
 import { PricingToggleEditor } from "./editor";
 
-export interface PricingPlan { name: string; monthlyPrice: number; annualPrice: number; currency: string; description?: string; features: string[]; ctaText: string; ctaAction?: any; popular?: boolean; badge?: string; }
+export interface PricingPlan { name: string; monthlyPrice: number; annualPrice: number; currency: string; description?: string; features: (string | { text: string; icon?: string })[]; ctaText: string; ctaAction?: any; popular?: boolean; badge?: string; }
 export interface PricingToggleData {
   sectionLabel?: string;
   title: string;
