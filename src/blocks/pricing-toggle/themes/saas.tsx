@@ -5,7 +5,9 @@ import { useActionExecutor } from "@/lib/cms/hooks/use-action-executor";
 import type { PricingToggleData } from "../definition";
 import * as Icons from "lucide-react";
 
-export function PricingToggleSaaS({ data, isDark }: { data: PricingToggleData; isDark?: boolean }) {
+import { BlockSettings } from "../../types";
+
+export function PricingToggleSaaS({ data, isDark, settings }: { data: PricingToggleData; isDark?: boolean; settings?: BlockSettings }) {
   const showSwitch = !!(
     (data.monthlyLabel && data.monthlyLabel.trim() !== "") ||
     (data.yearlyLabel && data.yearlyLabel.trim() !== "") ||
@@ -14,14 +16,21 @@ export function PricingToggleSaaS({ data, isDark }: { data: PricingToggleData; i
   );
   const [isAnnual, setIsAnnual] = useState(showSwitch);
   const { executeAction } = useActionExecutor();
+  const align = settings?.textAlign || "center";
   return (
     <div className="max-w-6xl mx-auto">
-      <div className="text-center mb-12 space-y-4">
+      <div className={cn(
+        "mb-12 space-y-4",
+        align === "left" ? "text-left" : align === "right" ? "text-right" : "text-center"
+      )}>
         {data.sectionLabel && <p className={cn("text-xs font-bold uppercase tracking-widest", isDark?"text-[var(--primary)]":"text-[var(--primary)]")}>{data.sectionLabel}</p>}
         <h2 className={cn("text-3xl md:text-4xl", isDark?"text-white":"text-[var(--secondary)]")}>{data.title}</h2>
         {data.subtitle && <p className={cn("text-lg max-w-2xl mx-auto", isDark?"text-white/60":"text-[var(--secondary)]/60")}>{data.subtitle}</p>}
         {showSwitch && (
-          <div className="flex items-center justify-center gap-3 pt-2">
+          <div className={cn(
+            "flex items-center gap-3 pt-2",
+            align === "center" ? "justify-center" : align === "right" ? "justify-end" : "justify-start"
+          )}>
             <span className={cn("text-sm font-medium", !isAnnual?(isDark?"text-white":"text-[var(--secondary)]"):(isDark?"text-slate-500":"text-slate-400"))}>{data.monthlyLabel || "Tháng"}</span>
             <button onClick={() => setIsAnnual(!isAnnual)} className={cn("relative w-12 h-6 rounded-full transition-colors", isAnnual?"bg-[var(--primary)]":(isDark?"bg-slate-600":"bg-slate-300"))}>
               <span className={cn("absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-200", isAnnual?"left-6":"left-0.5")} />
@@ -43,11 +52,17 @@ export function PricingToggleSaaS({ data, isDark }: { data: PricingToggleData; i
           return (
             <div key={i} className={cn("rounded-[var(--radius)] border p-6 space-y-5 relative", plan.popular?(isDark?"bg-[var(--primary)]/20 border-[var(--primary)]":"bg-[var(--primary)] border-[var(--primary)] text-white shadow-[var(--shadow-lg)] shadow-[var(--primary)]/20"):(isDark?"bg-slate-800 border-slate-700":"bg-white border-slate-200 shadow-sm"))}>
               {plan.popular && <div className="absolute -top-3 left-1/2 -translate-x-1/2"><span className="bg-[var(--secondary)] text-white text-xs font-bold px-4 py-1 rounded-full shadow">{plan.badge||"Phổ biến nhất"}</span></div>}
-              <div>
+              <div className={cn(
+                align === "center" ? "text-center" : align === "right" ? "text-right" : "text-left"
+              )}>
                 <h3 className={cn("text-xl", plan.popular?"text-white":(isDark?"text-white":"text-[var(--secondary)]"))}>{plan.name}</h3>
                 {plan.description && <p className={cn("text-sm mt-1", plan.popular?"text-white/80":(isDark?"text-slate-400":"text-slate-500"))}>{plan.description}</p>}
               </div>
-              <div className="flex items-baseline gap-1">
+              <div className={cn(
+                "flex items-baseline gap-1",
+                align === "center" && "justify-center",
+                align === "right" && "justify-end"
+              )}>
                 <span className={cn("text-4xl font-bold", plan.popular?"text-white":(isDark?"text-white":"text-[var(--secondary)]"))}>
                   {price.toLocaleString()}{plan.currency}
                 </span>
