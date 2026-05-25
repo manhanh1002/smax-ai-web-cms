@@ -3,6 +3,7 @@ import React from "react";
 import { Field, Inp, Txt, ActionPicker } from "@/components/cms/block-editors/shared";
 import { Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { IconPicker } from "@/components/cms/IconPicker";
 
 export function PricingToggleEditor({ data, onChange }: { data: any; onChange: (d: any) => void }) {
   const set = (k: string, v: any) => onChange({ ...data, [k]: v });
@@ -71,11 +72,9 @@ export function PricingToggleEditor({ data, onChange }: { data: any; onChange: (
                     <div className="space-y-2">
                       {normalizedFeatures.map((feat: any, idx: number) => (
                         <div key={idx} className="flex gap-2 items-center">
-                          <div className="w-24 shrink-0">
-                            <Inp 
+                          <div className="w-36 shrink-0">
+                            <IconPicker 
                               value={feat.icon || "Check"} 
-                              placeholder="Icon (Check)" 
-                              className="h-9 text-xs px-2"
                               onChange={iconVal => {
                                 const nextFeats = [...normalizedFeatures];
                                 nextFeats[idx] = { ...nextFeats[idx], icon: iconVal };
